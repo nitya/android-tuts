@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Android Development For Beginners: Unit 1</title>
+
+
+		<meta name="description" content="Android Course Materials">
+		<meta name="author" content="Nitya Narasimhan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../css/reveal.min.css">
+		<link rel="stylesheet" href="../css/theme/moon.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">			
+
+				<section>
+					<h1>Getting Started</h1>
+					<h3> Android Development: Unit 1</h3>
+					<br><br>
+					<h6><a href="http://google.com/+NityaNarasimhan">Nitya Narasimhan</a></bold></h6>
+					<br><br>
+					References
+					<br><small>
+					<a href="http://developer.android.com/training/index.html">Android Developers Website</a><br>
+					<a href="https://github.com/commonsguy/cw-omnibus">Commonsware Tutorials </a></small>
+				</section>
+
+
+				<!-- Unit1: Getting Started-->
+				<section id="unit1">
+					<br><h2> <a href="../index.html">#1.</a> Getting Started</h2><br>
+
+					<ul>
+						<li> <a href="#/unit1-1">Building Your First App </a>
+						<li> <a href="#/unit1-2">Adding the Action Bar</a>
+						<li> <a href="#/unit1-3">Supporting Different Devices</a>
+						<li> <a href="#/unit1-4">Managing the Activity Lifecycle</a>
+						<li> <a href="fragment.html#/unit1-5">Building a Dynamic UI with Fragments</a>
+						<li> <a href="fragment.html#/unit1-6">Saving Data</a>
+						<li> <a href="fragment.html#/unit1-7">Interacting with Other Apps</a>
+					</ul>
+				</section>
+
+				<!-- Unit1.1: Building the First App -->
+				<section>
+					<section id="unit1-1">
+						<br><h2> <a href="#/unit1">#1.</a>1 Building The First App</h2><br>
+						<ul>
+							<li> Creating an Android Project
+							<li> Running your application 
+							<li> Building a simple user interface activity
+							<li> Starting another activity
+						</ul>
+					</section>
+
+					<section id="unit1-1-1">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>1 Create a New Project
+						</h2>
+						<a href="#" class="image"> <img  src="../img/1.create.wizard.png"/> </a> <br>
+						<small>Create a default Blank Activity application</small>
+
+						<aside class="notes">
+							<ul>
+								<li> Application Name = name seen on mobile device
+								<li> Project Name = directory on development device
+								<li> Package Name = unique namespace for app
+								<li> Min Req SDK = lowest version the app supports
+								<li> Target SDK = highest version app tested on
+								<li> Compile With = typically latest version available
+								<li> Theme = android UI style used
+							</ul
+						</aside>
+					</section>
+
+					<section id="unit1-1-2">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>2 Study the App Manifest
+						</h2>
+						<a href="#" class="image"> <img  src="../img/1.manifest.png"/> </a> 
+						<br>
+						<small>Understand where declared resources are found</small>
+					</section>
+
+					<section id="unit1-1-3">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>3 Key elements to remember
+						</h2>
+						<ul>
+							<li> <a href="http://developer.android.com/guide/topics/manifest/uses-sdk-element.html"> uses-sdk</a> = which devices can app be installed on
+							<li> <a href="http://developer.android.com/guide/topics/manifest/uses-permission-element.html"> uses-permission </a> = needed to access others' features 
+							<br><br>
+							<li> <a href="http://developer.android.com/guide/topics/manifest/application-element.html">application</a> = declare components, set attribute values 
+								<ul>
+								<li> <a href="http://developer.android.com/guide/topics/manifest/activity-element.html"> activity </a> = declare user interface component
+								<li> <a href="http://developer.android.com/guide/topics/manifest/service-element.html"> service </a> = declare background task component
+								<li> <a href="http://developer.android.com/guide/topics/manifest/receiver-element.html"> receiver </a> = declare broadcast receiver component</a>
+								<li> <a href="http://developer.android.com/guide/topics/manifest/provider-element.html"> provider </a> = declare content provider component </a>
+								<li> <a href="http://developer.android.com/guide/topics/manifest/intent-filter-element.html"> intent-filter </a> = declare actions handled by component
+								</ul>
+							<li> <a href="http://developer.android.com/guide/topics/manifest/permission-element.html"> permission </a>= needed by others, to access its features
+						</ul>
+					</section>
+
+					<section id="unit1-1-4">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>4 Select Device (Customize)
+						</h2>
+						<a href="#" class="image"> <img height="500" src="../img/1.custom.device.png"/> </a> 
+						<br>
+						<small>Tip: Create custom device, use Hardware buttons </small>
+					</section>
+
+					<section id="unit1-1-5">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>5 Create AVD (for Device)
+						</h2>
+						<a href="#" class="image"> <img height="500" src="../img/1.custom.avd.png"/> </a> 
+						<br>
+						<small>Tip: Create at least 1 phone and 1 tablet AVD </small>
+					</section>
+
+					<section id="unit1-1-6">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>6 Run App on AVD (for Device)
+						</h2>
+						<a href="#" class="image"> <img height="500" src="../img/1.run.avd.png"/> </a> 
+						<br>
+						<small>Tip: Start AVD ahead of time and leave running </small>
+					</section>
+
+					<section id="unit1-1-7">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>7 Build a user interface
+						</h2>
+						<ul>
+							<li> Create a Linear Layout
+							<li> Add a Text Field
+							<li> Add String Resources
+							<li> Add a Button
+							<li> Make Input Box Fill Screen Width
+						</ul>
+						<br><br>
+						See <a href="http://developer.android.com/guide/topics/ui/declaring-layout.html"> Layouts </a> for more info
+					
+					</section>
+
+					<section id="unit1-1-8">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>8 Screencast
+						</h2>
+						<small> Click image to download screencast video</small>
+						<a href="https://drive.google.com/file/d/0Bx97LfuC1BC-NXg2cHZQaW5TSDg/edit?usp=sharing"><image height="400px" src="../img/1.build.ui.screencast.png" /> </a>
+						<br>
+						<small> Tip: See <a href="http://developer.android.com/reference/android/view/View.html"> View API </a> for info
+						</small>
+					</section>
+
+
+					<section id="unit1-1-9">
+						<br><h2> 
+							<a href="#/unit1-1">#1.1.</a>9 Start Another Activity
+						</h2>
+						<ul>
+							<li> Respond to the Send Button
+							<li> Build an Intent
+							<li> Start the 2nd Activity
+							<li> Create the 2nd Activity
+							<li> Receive the Intent
+							<li> Display the Message
+						</ul>
+						<br><br>
+						See <a href="http://developer.android.com/guide/topics/ui/declaring-layout.html"> Layouts </a> for more info
+					
+					</section>
+				</section>
+
+				<!-- Unit1.2: Adding the Action Bar -->
+				<section>
+					<section id="unit1-2">
+						<br><h2><a href="#/unit1">#1.</a>2 Adding the Action Bar</h2><br>
+						<ul>
+							<li> Setting up the Action Bar
+							<li> Adding Action Buttons
+							<li> Stylng the Action Bar
+							<li> Overlaying the Action Bar
+						</ul>
+						<br>
+						<br>
+						<small>
+						Read: <a href="http://developer.android.com/design/patterns/actionbar.html"> Action Bar Design </a> for guidelines on style
+						</small>
+					</section>
+
+					<section id="unit1-2-0">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>0 What is the Action Bar?
+						</h2>
+						Key design element for Android apps
+						<br><br>		
+						<a href="#" class="image"> 
+							<img  src="../img/1.actionbar.png"/> </a> 	
+						<ul>
+							<li> Make activity actions <i> prominent </i>
+							<li> Make view navigation <i> consistent </i>
+							<li> Reduce <i>clutter </i> with overflow area
+							<li> Dedicated space for <i>brand identity</i>
+						</ul>
+					</section>
+
+					<section id="unit1-2-1">
+						<br>
+						<h2> 
+							<a href="#/unit1-2">#1.2.</a>1 Action Bar Elements
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.actionbar.basics.png"/> </a> 
+						<br><br>
+						<ul>
+							<li> 1. ICON = identity, 'up' affordance  
+							<li> 2. CONTROL = title, view switching 
+							<li> 3. ACTION = key activity actions
+							<li> 4. OVERFLOW = more activity actions
+						</ul>
+					</section>
+
+					<section id="unit1-2-2">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>2 Setting up the Action Bar
+						</h2>
+						<ul>
+							<li> Set 'uses-sdk' to API 11 or more
+							<li> Set or extend 'Theme.Holo' (default if API 11)
+							<li> Include <a href="http://developer.android.com/tools/support-library/setup.html"> Support Library </a> (for API below 11)
+							<li> We focus on Android 4.0.x (ICS and above)
+						</ul>
+						<br><br>
+						Read: More on <a href="http://developer.android.com/tools/support-library/setup.html"> Support Library Setup </a>
+					</section>
+
+					<section id="unit1-2-2-1">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>2.1 ActionBar Icon Pack
+						</h2>
+						<a href="#" class="image"> 
+							<img src="../img/1.actionbar.iconpack.png"/> 
+						</a> 
+						<br>
+						Provides <a href="http://developer.android.com/downloads/design/Android_Design_Icons_20131106.zip">standard icons</a> for popular actions <br>
+						<small> 13 action categories | Many types/category | 4 sizes/type: hdpi, mdpi, xhdpi, xxhdpi</small>
+					</section>
+
+					<section id="unit1-2-3">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>3 Building the Action Bar
+						</h2>
+						<br>
+						<ul>
+							<li> Create a <i>menu</i> resource per activity
+							<li> Add <i>item</i> per activity action, to menu
+							<li> Create <i>drawable</i> resources (icon), for action
+							<li> Inflate menu in <i>onCreateOptionsMenu()</i> 
+							<li> Handle menu events in <i>onOptionsItemSelected()</i> 
+						</ul>
+						<br><br><br>
+						REFERENCE: <a href="http://developer.android.com/guide/topics/ui/menus.html">Menu documentation </a>
+					</section>
+
+					<section id="unit1-2-3-1">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>3.1 Specify Actions in XML
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.2.3.1.actionxml.png"/> 
+						</a> 
+						<br>
+					</section>
+
+					<section id="unit1-2-3-2">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>3.2. Add Actions to Action Bar
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.2.3.2.addactions.png"/> 
+						</a> 
+						<br>
+					</section>
+
+					<section id="unit1-2-3-3">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>3.3 Respond to Action Buttons
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.2.3.3.respondactions.png"/> 
+						</a> 
+						<br>
+					</section>
+
+					<section id="unit1-2-3-3b">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>3.3 Before & After
+						</h2>
+						<a href="#" class="image"> 
+							<img height=450 src="../img/1.2.3.3.before.png"/> 
+						</a> 
+						<a href="#" class="image"> 
+							<img height=450 src="../img/1.2.3.3.after.png"/> 
+						</a> 
+					</section>
+
+					<section id="unit1-2-3-4">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>3.4 Add an 'Up' Button 
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.2.3.4.declareup.png"/> 
+						</a> 
+						<br>
+						<small>First declare the parent-child relationship in Manifest</small>
+					</section>
+
+
+					<section id="unit1-2-3-5">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>3.5 Add an 'Up' Button 
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.2.3.5.enableup.png"/> 
+						</a> 
+						<br>
+						<small>Then enable the feature in onCreate() by calling <i> setDisplayHomeAsUpEnabled()</i> </small>
+					</section>
+
+					<section id="unit1-2-3-5b">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>3.5 Before & After
+						</h2>
+						<a href="#" class="image"> 
+							<img height=450 src="../img/1.2.3.3.after.png"/> 
+						</a> 
+						<a href="#" class="image"> 
+							<img height=450 src="../img/1.2.3.5.after.png"/> 
+						</a> 
+					</section>
+
+					<section id="unit1-2-4">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>4 Styling the Action Bar
+						</h2>
+						<a href="#" class="image"> 
+							<img src="../img/1.2.4.1.styles.png"/> 
+						</a> 
+						<a href="#" class="image"> 
+							<img src="../img/1.2.4.1.manifest.png"/> 
+						</a> 
+						<br>
+						<small>Define yours styles in res/styles.xml. <br>
+							Declare their usage in Manifest</small>
+					</section>
+
+
+					<section id="unit1-2-4-1">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>4.1 Android Asset Studio
+						</h2>
+						<a href="#" class="image"> 
+							<img height="450" src="../img/1.2.4.1.studio.png"/> 
+						</a> 
+						<br>
+						<small>
+							REFERENCE: <a href="http://developer.android.com/guide/topics/ui/themes.html">UI: Styles & Themes </a>
+							<br>
+							<a href="http://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-actionbar.html#source.space.trim=1&source.space.pad=0&name=ic_action_example&theme=dark&color=33b5e5%2C60">Android Asset Studio </a>
+						</small>
+
+					</section>
+
+
+					<section id="unit1-2-4-2">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>4.2 Before & After
+						</h2>
+						<a href="#" class="image"> 
+							<img height=450 src="../img/1.2.3.5.after.png"/> 
+						</a> 
+						<a href="#" class="image"> 
+							<img height=450 src="../img/1.2.4.2.after.png"/> 
+						</a> 
+					</section>
+
+					<section id="unit1-2-5">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>5 Overlaying the Action Bar
+						</h2>
+						<a height=300 class="image"> 
+							<img align=left src="../img/1.2.5.actionbar.overlay.png"/> 
+						</a> 
+						<br>
+						<br>
+						To change visibility: <br> use <i>hide()</i> or <i>show()</i> 
+						<br>
+						<br>
+						To change position: <br> use <i>inline</i> or <i>overlay</i>
+						<br>
+						<br>
+						Overlay gives activity view full screen area <br>
+						(use transparency)
+
+					</section>
+
+
+					<section id="unit1-2-5-1">
+						<br><h2> 
+							<a href="#/unit1-2">#1.2.</a>5.1 Implementing Overlay
+						</h2>
+						<a class="image"> 
+							<img src="../img/1.2.5.1.declared.png"/> 
+						</a> 
+						<small>
+							1. Set <i>android:windowActionBarOverlay</i> to true in a Custom Theme <br>
+						</small>
+						<br><br>
+						<a class="image"> 
+							<img src="../img/1.2.5.1.layout.png"/> 
+						</a> 
+						<small>
+							2. Use padding or margin on <i>Activity View</i> layout <br>
+							to fine-tune placement (if elements obscured)
+						</small>
+
+					</section>
+
+					<section id="unit1-2-6">
+						<br>
+						<h2> 
+							<a href="#/unit1-2">#1.2.</a>6 About ActionBarSherlock
+						</h2>
+						<a href="#" class="image"> 
+							<img src="../img/1.actionbar.sherlock.png"/> 
+						</a> 
+						<small>
+						Use <a href="http://actionbarsherlock.com/">ActionBarSherlock</a> 
+						for compatibile views in older (API 10 and below) devices
+						</small>
+					</section>
+				</section>
+
+				<!-- Unit1.3: Supporting Different Devices-->
+				<section>
+					<section id="unit1-3">
+						<br><h2><a href="#/unit1">#1.</a>3 Supporting Different Devices</h2><br>
+						<ul>
+							<li> Supporting Different Languages
+							<li> Supporting Different Screens
+							<li> Supporting Different Platform Versions
+						</ul>
+					</section>
+
+					<section id="unit1-3-1">
+						<br><h2> 
+							<a href="#/unit1-2">#1.3.</a>1 Support Different Languages
+						</h2>
+						<a href="#" class="image"> 
+							<img src="../img/1.3.1.strings.res.png"/> 
+						</a> 
+						<a href="#" class="image"> 
+							<img src="../img/1.3.1.strings.en.png"/> 
+						</a> 
+						<a href="#" class="image"> 
+							<img src="../img/1.3.1.strings.es.png"/> 
+						</a> 
+					</section>
+
+					<section id="unit1-3-2">
+						<br><h2> 
+							<a href="#/unit1-2">#1.3.</a>2 Transparent Locale-Based Usage
+						</h2>
+						<a href="#" class="image"> 
+							<img src="../img/1.3.2.string.usage.java.png"/> 
+						</a> 
+						<br>
+						<small> Usage in code </small><br><br>
+						<a href="#" class="image"> 
+							<img src="../img/1.3.2.string.usage.xml.png"/> 
+						</a> 
+						<small> Usage in other resources (e.g., layout) </small>
+					</section>
+
+					<section id="unit1-3-3">
+						<br><h2> 
+							<a href="#/unit1-2">#1.3.</a>3 Support Different Screens
+						</h2>
+						<a class="image"> <img src="../img/1.3.3.screensize.png"/> </a> 
+						<a class="image"> <img src="../img/1.3.3.resolution.png"/> </a> 
+						<br>
+						<br>
+							Layout = screen size (small, normal, large, xlarge)<br>
+							Layout = orientation (default=portrait, land=landscape)	<br>
+							Drawable = density (ldpi, mdpi, hdpi, xhdpi) 
+					</section>
+
+
+					<section id="unit1-3-4">
+						<br><h2> 
+							<a href="#/unit1-2">#1.3.</a>4 Support Different Platforms
+						</h2>
+						<a class="image"> <img src="../img/1.3.4.theme.dialog.png"/> </a> 
+						<a class="image"> <img src="../img/1.3.4.theme.translucent.png"/> </a> 
+						<a class="image"> <img src="../img/1.3.4.theme.activity.png"/> </a> 
+						<a class="image"> <img src="../img/1.3.4.theme.application.png"/> </a> 
+						<br>
+						Use <a href="http://developer.android.com/reference/android/os/Build.html"><i>Build</i></a> constants to write <br>
+						conditional code for a platform <br>
+						Use themes to adapt app or activity views 
+					</section>
+				</section>
+
+				<!-- Unit1.4: Managing the Activity Lifecycle -->
+				<section>
+					<section id="unit1-4">
+						<br><h2><a href="#/unit1">#1.</a>4 Managing the Activity Lifecycle</h2><br>
+						<ul>
+							<li> Starting an Activity
+							<li> Pausing and Resuming an Activity
+							<li> Stopping and Restarting an Activity
+							<li> Recreating an Activity
+						</ul>
+						<br>
+						<br>
+						<small>
+						Read: <a href="http://developer.android.com/guide/components/activities.html"> Activities </a> for more information
+						</small>
+					</section>
+
+					<section id="unit1-4-1">
+						<br><h2>
+							<a href="#/unit1-4">#1.4.</a>1 Starting an Activity
+						</h2><br>
+						<ul>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/starting.html#lifecycle-states">Understand the Lifecycle Callbacks</a>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/starting.html#launching-activity">Specify your App's Launcher Activity</a>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/starting.html#Create">Create a New Instance</a>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/starting.html#Destroy">Destroy the Activity</a>
+						</ul>
+						<br>
+						<br>
+						<small>
+						Read: <a href="http://developer.android.com/training/basics/activity-lifecycle/starting.html"> Start an Activity </a> 
+						</small>
+					</section>
+
+					<section id="unit1-4-1-1">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>1.1 Understand the Lifecycle Callbacks
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.activity.lifecycle.png"/> 
+						</a> 
+					</section>
+
+					<section id="unit1-4-1-2">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>1.2 Specify your App's Launcher Activity
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.launcher.png"/> 
+						</a> 
+					</section>
+
+
+					<section id="unit1-4-1-3">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>1.3 Create a New Instance
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.create.activity.png"/> 
+						</a> 
+					</section>
+
+
+					<section id="unit1-4-1-4">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>1.4 Destroy the Activity
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.destroy.activity.png"/> 
+						</a> 
+					</section>
+
+					<section id="unit1-4-2">
+						<br><h2>
+							<a href="#/unit1-4">#1.4.</a>2 Pause and Resume an Activity
+						</h2><br>
+						<ul>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/pausing.html#Pause">Pause an Activity</a>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/pausing.html#Resume">Resume an Activity</a>
+						</ul>
+						<br>
+						<br>
+						<small>
+						Read: <a href="http://developer.android.com/training/basics/activity-lifecycle/pausing.html"> Pausing and Resuming an Activity </a> 
+						</small>
+					</section>
+					<section id="unit1-4-2-1">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>2.1 Pause the Activity
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.pause.activity.png"/> 
+						</a> 
+					</section>
+					<section id="unit1-4-2-2">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>2.2 Resume the Activity
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.resume.activity.png"/> 
+						</a> 
+					</section>
+
+					<section id="unit1-4-3">
+						<br><h2>
+							<a href="#/unit1-4">#1.4.</a>3 Stop and Restart An Activity
+						</h2><br>
+						<ul> 
+							<li> <a "http://developer.android.com/training/basics/activity-lifecycle/stopping.html#Stop">Stop an Activity</a>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/stopping.html#Start">Start/Restart an Activity</a>
+						</ul>
+						<br>
+						<br>
+						<small>
+						Read: <a href="http://developer.android.com/training/basics/activity-lifecycle/stopping.html"> Stopping and Restarting an Activity </a> 
+						</small>
+					</section>
+					<section id="unit1-4-3-1">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>3.1 Stop the Activity
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.stop.activity.png"/> 
+						</a> 
+					</section>
+					<section id="unit1-4-3-2">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>3.2 Restart the Activity
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.restart.activity.png"/> 
+						</a> 
+					</section>
+
+
+					<section id="unit1-4-4">
+						<br><h2>
+							<a href="#/unit1-4">#1.4.</a>4 Recreate an Activity
+						</h2><br>
+						<ul>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/pausing.html#Pause">Save Activity State</a>
+							<li> <a href="http://developer.android.com/training/basics/activity-lifecycle/pausing.html#Resume">Restore Activity State</a>
+						</ul>
+						<br>
+						<br>
+						<small>
+						Read: <a href="http://developer.android.com/training/basics/activity-lifecycle/recreating.html"> Recreating an Activity </a> 
+						</small>
+					</section>
+					<section id="unit1-4-4-1">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>4.1 Save the Activity
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.save.activity.png"/> 
+						</a> 
+					</section>
+					<section id="unit1-4-4-2">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>4.2 Restore onCreate
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.restore.activity.png"/> 
+						</a> 
+					</section>
+					<section id="unit1-4-4-3">
+						<br><h2> 
+							<a href="#/unit1-4">#1.4.</a>4.3 Restore the Activity 
+						</h2>
+						<a href="#" class="image"> 
+							<img  src="../img/1.4.onRestore.activity.png"/> 
+						</a> 
+					</section>
+
+					<section id="unit1-4-5">
+						<br><h2>
+							<a href="#/unit1-4">#1.4.</a>5 Assignment
+						</h2><br>
+						<ul>
+							<li> Create 'Named' Basic App <a href="#/unit1-1"> (Unit 1.1) </a> 
+							<li> Import the ActivityDemo App <a href="http://developer.android.com/shareables/training/ActivityLifecycle.zip"> (Download zip) </a>
+							<li> Update Basic App to add a new "Launch Demo" button
+							<li> Bind button to a launchActivityDemo method 
+							<li> Challenge: Update ActivityDemo to return result 
+						</ul>
+						<br>
+						<br>
+					</section>
+				</section>
+
+				<!-- Unit1.5: Building a Dynamic UI with Fragments -->
+				<section id="unit1-5">
+					<br><a href="fragments.html"><h2>Next Section</h2></a><br>
+					<br>
+					<h3> <a href="fragment.html#/unit1-5">Building a Dynamic UI with Fragments </a></h3>
+					<h3> <a href="fragment.html#/unit1-6">Saving Data</a></h3>
+					<h3> <a href="fragment.html#/unit1-7">Interacting with Other Apps</a></h3>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in / ../css/theme
+				transition: Reveal.getQueryHash().transition || 'cube', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

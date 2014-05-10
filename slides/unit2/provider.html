@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Android Development For Beginners: Unit 1</title>
+
+		<meta name="description" content="Android Course Materials">
+		<meta name="author" content="Nitya Narasimhan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../css/reveal.min.css">
+		<link rel="stylesheet" href="../css/theme/moon.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<!-- Title Slide -->
+				<section>
+					<h1>Content Sharing </h1>
+					<h3>Unit 2.0: Content Providers</h3>
+					<br><br>
+					<h6><a href="http://google.com/+NityaNarasimhan">Nitya Narasimhan</a></bold></h6>
+					<br><br>
+					<a href="index.html#/unit2"> BACK TO UNIT 2 </a>
+				</section>
+
+
+				<!-- Unit2.0: TOC -->
+				<section data-transition="linear" data-background-transition="slide">	
+					<section id="unit2-0">
+						<br><h2><a href="index.html#/unit2">#2.</a>0 Content Providers</h2><br>
+						<ul>
+							<li> <a href="#/unit2-0-1">Content Provider Basics</a>
+							<li> <a href="#/unit2-0-2">Creating a Content Provider</a>
+							<li> <a href="#/unit2-0-3">Calendar Provider</a>
+							<li> <a href="#/unit2-0-4">Contacts Provider</a>
+							<li> <a href="#/unit2-0-5">Storage Access Framework</a>
+						</ul>
+					</section>
+
+					<section id="unit2-0-0-a">
+						<br><h2><a href="#/unit2-0">#2.0.</a>0 Overview</h2><br>
+						<ul>
+							<li> Manage access to structured set of data
+							<li> Encapsulate data sets
+							<li> Provides security (enforces permissions)
+							<li> Abstracted via <i>ContentResolver</i> object 
+						</ul>
+					</section>
+
+					<section id="unit2-0-0-b">
+						<br><h2><a href="#/unit2-0">#2.0.</a>0 Overview</h2><br>
+						<ul>
+							<li> Core Providers for Contacts, Calendar, Images,..
+							<li> .. look in <i>android.provider</i> package
+							<li> Make you own if you share data with other apps
+							<li> .. or if you require custom search capability
+							<li> .. or if you require complex copy/paste across apps
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- Unit2.0.1: Content Provider Basics -->
+				<section data-transition="linear" data-background-transition="slide">	
+
+					<section id="unit2-0-1">
+						<br><h2><a href="#/unit2-0">#2.0.</a>1 Provider Basics</h2>
+						<img src="../img/provider/2.0.1.table.png" />
+						<ul>
+							<li> Format mimics relational db
+							<li> Primary Key not mandatory **
+						</ul>
+						<br><br>
+						<small> ** The exception is if data is bound to a ListView </small>
+					</section>
+
+					<section id="unit2-0-1-1">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>1 Accessing Providers</h2><br>
+						<ul>
+							<li> Requires <i>ContentResolver</i> object
+							<li> Provides basic CRUD operations 
+							<li> Support services (change notifications)
+							<li> Exposes ContentProvider methods
+							<li> Handles IPC to provider (queries)
+						</ul>
+					</section>
+
+					<section id="unit2-0-1-2">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>2 ContentResolver</h2><br>
+						<pre><code>
+  // Get Content Resolver from component "Context"
+  resolver = getContentResolver();
+
+  // Queries the user dictionary and returns results
+  mCursor = resolver.query(
+      UserDictionary.Words.CONTENT_URI,   // Content URI of table (data)
+      mProjection,                        // Columns to return in result
+      mSelectionClause                    // Selection criteria condition
+      mSelectionArgs,                     // Selection criteria args
+      mSortOrder                          // Sort order for results (rows)
+  );
+						</code></pre>
+					</section>
+
+					<section id="unit2-0-1-3">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>3 Core Content Providers</h2><br>
+						<ul>
+							<li> Browser (bookmarks, history)
+							<li> Calendar (events, attendees)
+							<li> CallLog (calls received, placed)
+							<li> Contacts (address book profiles)
+							<li> MediaStore (metadata for audio, video, images)
+							<li> Telephony (mms or sms sent, received)
+							<li> UserDictionary (predictive text)
+						</ul>
+						<br><br>
+						<blockquote> See <a href="http://developer.android.com/reference/android/provider/package-summary.html"> list here </a></blockquote>
+					</section>
+
+
+					<section id="unit2-0-1-4">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>4 Content URI</h2><br>
+						<blockquote>
+						content://user_dictionary/words/4
+						</blockquote>
+						<br>
+						<ul>
+							<li> Unique data identifier
+							<li> Scheme = provider indicator (content://)
+							<li> Authority = provider ID ("user_dictionary")
+							<li> Path = data name,type ("words")
+							<li> ID = specific data item (ID=4) 
+ 						</ul>
+					</section>
+
+					<section id="unit2-0-1-5">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>5 Retrieving Data</h2>
+						Request access permissions. Construct and run query.
+						<pre><code>
+/** 
+  * STEP 1: Request access permissions for specified data 
+  *
+  * Done in AndroidManifest.xml by declaring <uses-permission>
+  * where requested permission strings are obtained from the list
+  * declared by the ContentProvider being interacted with
+  *  <uses-permission android:name="android.permission.READ_USER_DICTIONARY">
+  */
+
+
+/** STEP 2: Construct your query
+  * 
+  * Running the query returns a results "Cursor" you step through
+  *
+  * Analogous to SQL
+  *   SELECT _ID, word, locale   --> projection
+  *   FROM words                 --> content URI
+  *   WHERE word = <userinput>   --> selection clause, args
+  *   ORDER BY word ASC;         --> result sort order
+  */
+
+// A "projection" defines the columns that will be returned for each row
+String[] mProjection =
+{
+    UserDictionary.Words._ID,    // Contract class constant for the _ID column name
+    UserDictionary.Words.WORD,   // Contract class constant for the word column name
+    UserDictionary.Words.LOCALE  // Contract class constant for the locale column name
+};
+
+// Defines a string to contain the selection clause
+String mSelectionClause = null;
+
+// Initializes an array to contain selection arguments
+String[] mSelectionArgs = {""};
+
+// Gets a word from the UI
+mSearchString = mSearchWord.getText().toString();
+
+// Remember to insert code here to check for invalid or malicious input.
+
+// If the word is the empty string, gets everything
+if (TextUtils.isEmpty(mSearchString)) {
+    // Setting the selection clause to null will return all words
+    mSelectionClause = null;
+    mSelectionArgs[0] = "";
+
+} else {
+    // Constructs a selection clause that matches the word that the user entered.
+    mSelectionClause = UserDictionary.Words.WORD + " = ?";
+
+    // Moves the user's input string to the selection arguments.
+    mSelectionArgs[0] = mSearchString;
+
+}
+
+// Does a query against the table and returns a Cursor object
+mCursor = getContentResolver().query(
+    UserDictionary.Words.CONTENT_URI,  // The content URI of the words table
+    mProjection,                       // The columns to return for each row
+    mSelectionClause                   // Either null, or the word the user entered
+    mSelectionArgs,                    // Either empty, or the string the user entered
+    mSortOrder);                       // The sort order for the returned rows
+
+// Some providers return null if an error occurs, others throw an exception
+if (null == mCursor) {
+    /*
+     * Insert code here to handle the error. Be sure not to use the cursor! You may want to
+     * call android.util.Log.e() to log this error.
+     *
+     */
+// If the Cursor is empty, the provider found no matches
+} else if (mCursor.getCount() < 1) {
+
+    /*
+     * Insert code here to notify the user that the search was unsuccessful. This isn't necessarily
+     * an error. You may want to offer the user the option to insert a new row, or re-type the
+     * search term.
+     */
+
+} else {
+    // Insert code here to do something with the results
+
+}
+						</code></pre>
+					</section>
+
+
+					<section id="unit2-0-1-6">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>6 Display Query Results</h2>
+						Cursor = random read access to returned result set.
+						<br>
+						<pre><code>
+/**
+ * Cursor returns list of results (rows). 
+ * Bind to ListView with SimpleCursorAdapter (auto-populates list)
+ */
+
+/* Defines a list of columns to retrieve from the Cursor and load into an output row */
+String[] mWordListColumns =
+{
+    UserDictionary.Words.WORD,   // Contract class constant containing the word column name
+    UserDictionary.Words.LOCALE  // Contract class constant containing the locale column name
+};
+
+/* Defines a list of View IDs that will receive the Cursor columns for each row */
+int[] mWordListItems = { R.id.dictWord, R.id.locale};
+
+/* Creates a new SimpleCursorAdapter */
+mCursorAdapter = new SimpleCursorAdapter(
+    getApplicationContext(),               // The application Context object
+    R.layout.wordlistrow,                  // A layout in XML for one row in the ListView
+    mCursor,                               // The result from the query
+    mWordListColumns,                      // A string array of column names in the cursor
+    mWordListItems,                        // An integer array of view IDs in the row layout
+    0);                                    // Flags (usually none are needed)
+
+/* Sets the adapter for the ListView */
+mWordList.setAdapter(mCursorAdapter);
+						</code></pre>
+					</section>
+
+
+					<section id="unit2-0-1-7">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>7 Inserting Data</h2>
+						ContentResolver.insert() --> get URI for inserted item
+						<pre><code>
+/**
+ * Returned value of insert is a content URI to new item in format:
+ *  	Uri newItem = content://user_dictionary/words/<id_value>
+ * Provider here automatically generates new _ID for item and creates Uri
+ *
+ * To retrieve the _ID from this use 
+ *		ContentUris.parseId(newUri)
+ */
+
+/* Defines a new Uri object that receives the result of the insertion */
+Uri mNewUri;
+
+...
+
+/* Defines an object to contain the new values to insert */
+ContentValues mNewValues = new ContentValues();
+
+/*
+ * Sets the values of each column and inserts the word. The arguments to the "put"
+ * method are "column name" and "value"
+ */
+mNewValues.put(UserDictionary.Words.APP_ID, "example.user");
+mNewValues.put(UserDictionary.Words.LOCALE, "en_US");
+mNewValues.put(UserDictionary.Words.WORD, "insert");
+mNewValues.put(UserDictionary.Words.FREQUENCY, "100");
+
+mNewUri = getContentResolver().insert(
+    UserDictionary.Word.CONTENT_URI,   // the user dictionary content URI
+    mNewValues                          // the values to insert
+);
+						</code></pre>
+					</section>
+
+					<section id="unit2-0-1-8">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>8 Updating Data</h2>
+						
+						<pre><code>
+/* 
+ * Defines an object to contain the updated values
+ * Each object corresponds to one data row
+ */
+ContentValues mUpdateValues = new ContentValues();
+
+/* Defines selection criteria for the rows you want to update */
+String mSelectionClause = UserDictionary.Words.LOCALE +  "LIKE ?";
+String[] mSelectionArgs = {"en_%"};
+
+/* Defines a variable to contain the number of updated rows */
+int mRowsUpdated = 0;
+
+...
+
+/*
+ * Sets the updated value and updates the selected words.
+ */
+mUpdateValues.putNull(UserDictionary.Words.LOCALE);
+
+/* Method returns number of rows updated */
+mRowsUpdated = getContentResolver().update(
+    UserDictionary.Words.CONTENT_URI,   // the user dictionary content URI
+    mUpdateValues                       // the columns to update
+    mSelectionClause                    // the column to select on
+    mSelectionArgs                      // the value to compare to
+);
+						</code></pre>
+					</section>
+
+					<section id="unit2-0-1-9">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>9 Deleting Data</h2>
+						
+						<pre><code>
+
+/* Defines selection criteria for the rows you want to delete */
+String mSelectionClause = UserDictionary.Words.APP_ID + " LIKE ?";
+String[] mSelectionArgs = {"user"};
+
+/* Defines a variable to contain the number of rows deleted */
+int mRowsDeleted = 0;
+
+...
+
+/* 
+ * Deletes the words that match the selection criteria
+ * Returns number of rows deleted 
+ */
+mRowsDeleted = getContentResolver().delete(
+    UserDictionary.Words.CONTENT_URI,   // the user dictionary content URI
+    mSelectionClause                    // the column to select on
+    mSelectionArgs                      // the value to compare to
+);
+						</code></pre>
+					</section>
+
+
+					<section id="unit2-0-1-10">
+						<br><h2><a href="#/unit2-0-1">#2.0.1.</a>10 Alternative Access Options</h2><br>
+						<ul>
+							<li> Batch Accesses (1 transaction, Array result)
+							<li> Asynchronous Queries (CursorLoader)
+							<li> Via Intents (Delegation) **
+ 						</ul>
+ 						<br><br>
+ 						<small>
+ 							Caller can get limited access to specific data without user permission <br>
+ 							Ex: Request another app with permissions to do the work and return results <br>
+ 							The called app can grant caller permissions to access 'only' these uris by setting flag in Intent result. <br>
+ 							The permissions then last only until the current Activity is complete.
+ 						</small>
+					</section>
+						
+
+
+
+				</section>
+
+
+				<!-- Unit2.0.2: Creating a Content Provider -->
+				<section data-transition="linear" data-background-transition="slide">		
+					<section id="unit2-0-2">
+					</section>
+					<section id="unit2-0-2-1">
+					</section>
+				</section>
+
+
+				<!-- Unit2.0.3: Calendar Provider -->
+				<section data-transition="linear" data-background-transition="slide">		
+					<section id="unit2-0-3">
+					</section>
+					<section id="unit2-0-3-1">
+					</section>
+				</section>
+
+				<!-- Unit2.0.4: Contacts Provider -->
+				<section data-transition="linear" data-background-transition="slide">		
+					<section id="unit2-0-4">
+					</section>
+					<section id="unit2-0-4-1">
+					</section>
+				</section>
+
+
+				<!-- Unit2.0.5: Storage Access Framework -->
+				<section data-transition="linear" data-background-transition="slide">		
+					<section id="unit2-0-5">
+					</section>
+					<section id="unit2-0-5-1">
+					</section>
+				</section>
+
+
+			</div> <!-- end slides -->
+		</div> <!-- end reveal -->
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in / ../css/theme
+				transition: Reveal.getQueryHash().transition || 'cube', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

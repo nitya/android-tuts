@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Android Development For Beginners: Lecture Materials</title>
+
+		<meta name="description" content="Android Course Materials">
+		<meta name="author" content="Nitya Narasimhan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="lib/css/font-awesome.min.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<!-- Custom CSS -->
+		<style type='text/css'>
+            div.emph {
+                border: 1px solid white;
+            }
+            div.floats div {
+                margin: 10px;
+                padding: 10px;
+                float: left;
+            }
+		</style>
+
+        <!-- Fix this: https://github.com/FortAwesome/Font-Awesome/pull/2131 -->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>ANDROID DEVELOPMENT</h1>
+					<h3> ..for beginners</h3>
+					<br><br>
+					<h6><a href="http://google.com/+NityaNarasimhan">Nitya Narasimhan</a></bold></h6>
+					<br><br>
+					References
+					<br><small>
+					<a href="http://developer.android.com/training/index.html">Android Developers Website</a><br>
+					<a href="https://github.com/commonsguy/cw-omnibus">Commonsware Tutorials </a></small>
+				</section>
+
+				<!-- About This -->
+				<section>
+					<br><h2>About These Materials</h2><br>
+					
+					<ul>
+						<li> Use for class lectures and/or self-study
+						<li> Based on <a href="http://developers.android.com">Android Developers </a> content
+						<li> Additional content used with attribution
+					</ul>
+					<br><br>
+					<p>
+					<small>
+
+					 Please contact me if you have corrections or feedback regarding <br>
+					 either content or attribution, and I will be more than happy to <br>
+					 make the necessary changes
+					</small>
+					</p>
+				</section>
+
+				<!-- Android Dashboard-->
+				<section>
+
+					<h2>Android Activation</h2>	
+
+					Check the <a href="http://developer.android.com/about/dashboards/index.html?utm_source=ausdroid.net"> Android Dashboard </a> for the latest <br>
+					stats on device/version distribution<br>
+					<br>
+					<a href="#" class="image"> <img  src="img/0.dashboard.versions.png"/> </a> <br>
+
+					<small><i> Developer Tip >> </i> Target app development for ICS (API 15) and above.</small>
+
+					<aside class="notes">
+						<ul>
+							<li> Honeycome was tablets-only
+							<li> ICS was 1st 'unified' version (tablets+phone)
+						</ul
+					</aside>
+				</section>
+
+				<!-- Unit0: About Android-->
+				<section>
+					<section id="unit0">
+						<br><h2><a href="unit0/index.html"> #0.</a> About Android</h2><br>
+						<small>
+						<ul>
+							<li> <a href="#/unit0-1">Introduction</a>
+							<li> <a href="#/unit0-2">App Components</a>
+							<li> <a href="#/unit0-3">App Resources</a>
+							<li> <a href="#/unit0-4">App Manifest</a>
+							<li> <a href="#/unit0-5">User Interface</a>
+							<li> <a href="#/unit0-6">Animation & Graphics</a>
+							<li> <a href="#/unit0-7">Computation</a>
+							<li> <a href="#/unit0-8">Media and Camera</a>
+							<li> <a href="#/unit0-9">Location and Sensors</a>
+							<li> <a href="#/unit0-10">Connectivity</a>
+							<li> <a href="#/unit0-11">Text and Input</a>
+							<li> <a href="#/unit0-12">Data Storage</a>
+							<li> <a href="#/unit0-13">Administration</a>
+							<li> <a href="#/unit0-14">Web Apps</a>
+							<li> <a href="#/unit0-15">Best Practices</a>
+						</ul>
+						</small>
+					</section>
+
+					<section id="unit0-1">
+						<br><h2><a href="#/unit0"> #0.</a>1 Introduction</h2><br>
+						<ul>
+							<li> App Fundamentals
+							<li> Device Compatibility
+							<li> System Permissions
+						</ul>
+					</section>
+
+					<section id="unit0-2">
+						<br><h2><a href="#/unit0"> #0.</a>2 App Components</h2><br>
+						<ul>
+							<li> Intents and Intent Filters
+							<li> Activities
+							<li> Services
+							<li> Content Providers
+							<li> App Widgets
+							<li> Processes and Threads
+						</ul>
+					</section>
+
+					<section id="unit0-3">
+						<br><h2><a href="#/unit0"> #0.</a>3 App Resources </h2><br>
+						<ul>
+							<li> Overview 
+							<li> Providing Resources
+							<li> Accessing Resources
+							<li> Handling Runtime Changes
+							<li> Localization
+							<li> Resource Types
+						</ul>
+					</section>
+
+					<section id="unit0-4">
+						<br><h2><a href="#/unit0"> #0.</a>4 App Manifest</h2><br>
+						<div style="padding:10px;">
+							<small>
+		                    <div class="floats">
+		                        <div class="emph">action</div>
+		                        <div class="emph">activity</div>
+		                        <div class="emph">activity-alias</div>
+		                        <div class="emph">application</div>
+		                        <div class="emph">category</div>
+		                        <div class="emph">compatible-screens</div>
+		                        <div class="emph">data</div>
+		                        <div class="emph">grant-uri-permission</div>
+		                        <div class="emph">instrumentation</div>
+		                        <div class="emph">intent-filter</div>
+		                        <div class="emph">manifest</div>
+		                        <div class="emph">meta-data</div>
+		                        <div class="emph">path-permission</div>
+		                        <div class="emph">permission</div>
+		                        <div class="emph">permission-group</div>
+		                        <div class="emph">permission-tree</div>
+		                        <div class="emph">provider</div>
+		                        <div class="emph">receiver</div>
+		                        <div class="emph">service</div>
+		                        <div class="emph">supports-gl-texture</div>
+		                        <div class="emph">supports-screens</div>
+		                        <div class="emph">uses-configuration</div>
+		                        <div class="emph">uses-feature</div>
+		                        <div class="emph">uses-library</div>
+		                        <div class="emph">uses-permission</div>
+		                        <div class="emph">uses-sdk</div>
+		                    </div>
+		                	</small>
+						</div>
+					</section>
+
+					<section id="unit0-5">
+						<br><h2><a href="#/unit0"> #0.</a>5 User Interface </h2><br>
+						<div style="padding:20px;">
+		                    <div class="floats">
+		                        <div class="emph">Overview</div>
+		                        <div class="emph">Layouts</div>
+		                        <div class="emph">Input Controls</div>
+		                        <div class="emph">Input Events</div>
+		                        <div class="emph">Menus</div>
+		                        <div class="emph">Action Bar</div>
+		                        <div class="emph">Settings</div>
+		                        <div class="emph">Dialogs</div>
+		                        <div class="emph">Notifications</div>
+		                        <div class="emph">Toasts</div>
+		                        <div class="emph">Search</div>
+		                        <div class="emph">Drag and Drop</div>
+		                        <div class="emph">Accessibility</div>
+		                        <div class="emph">Styles and Themes</div>
+		                        <div class="emph">Custom Components</div>
+		                    </div>
+						</div>
+					</section>
+
+					<section id="unit0-6">
+						<br><h2><a href="#/unit0"> #0.</a>6 Animation & Graphics </h2><br>
+						<ul>
+							<li> Overview
+							<li> Property Animation
+							<li> View Animation
+							<li> Drawable Animation
+							<li> Canvas Drawables
+							<li> Open GL ES
+							<li> Hardware Acceleration
+						</ul>
+					</section>
+
+					<section id="unit0-7">
+						<br><h2><a href="#/unit0"> #0.</a>7 Computation</h2><br>
+						<ul>
+							<li> RenderScript
+							<li> Advanced RenderScript
+							<li> Runtime API Reference
+						</ul>
+					</section>
+
+					<section id="unit0-8">
+						<br><h2><a href="#/unit0"> #0.</a>8 Media and Camera</h2><br>
+						<ul>
+							<li> Media Playback
+							<li> MediaRouter
+							<li> Supported Media Formats
+							<li> Audio Capture
+							<li> JetPlayer
+							<li> Camera
+						</ul>
+					</section>
+
+					<section id="unit0-9">
+						<br><h2><a href="#/unit0"> #0.</a>9 Location and Sensors</h2><br>
+						<ul>
+							<li> Locaiton and Maps
+							<li> Location Strategies
+							<li> Sensors Overview
+							<li> Motion Sensors
+							<li> Position Sensors
+							<li> Environment Sensors
+						</ul>
+					</section>
+
+					<section id="unit0-10">
+						<br><h2><a href="#/unit0"> #0.</a>10 Connectivity</h2><br>
+						<ul>
+							<li> Bluetooth
+							<li> NFC
+							<li> WiFi P2P
+							<li> USB
+							<li> SIP
+						</ul>
+					</section>
+
+					<section id="unit0-11">
+						<br><h2><a href="#/unit0"> #0.</a>11 Text and Input</h2><br>
+						<ul>
+							<li> Copy and Paste
+							<li> Creating an IME
+							<li> Spelling Checker
+						</ul>
+					</section>
+
+					<section id="unit0-12">
+						<br><h2><a href="#/unit0"> #0.</a>12 Data Storage </h2><br>
+						<ul>
+							<li> Storage Options
+							<li> Data Backup
+							<li> App Install Location
+						</ul>
+					</section>
+
+					<section id="unit0-13">
+						<br><h2><a href="#/unit0"> #0.</a>13 Administration</h2><br>
+						<ul>
+							<li> Device Policies
+						</ul>
+					</section>
+
+					<section id="unit0-14">
+						<br><h2><a href="#/unit0"> #0.</a>14 Web Apps</h2><br>
+						<ul>
+							<li> Supporting Different Screens
+							<li> Building Web Apps in WebView
+							<li> Migrating to WebView in 4.4
+							<li> Debugging Web Apps
+							<li> Best Practices Web Apps
+						</ul>
+					</section>
+
+					<section id="unit0-15">
+						<br><h2><a href="#/unit0"> #0.</a>15 Best Practices</h2><br>
+						<ul>
+							<li> Support Multiple Screens
+							<li> Support Tablets and Handsets
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit1: Getting Started-->
+				<section>
+					<section id="unit1">
+						<br><h2> <a href="unit1/index.html">#1.</a> Getting Started</h2><br>
+
+						<ul>
+							<li> <a href="#/unit1-1">Building Your First App </a>
+							<li> <a href="#/unit1-2">Adding the Action Bar</a>
+							<li> <a href="#/unit1-3">Supporting Different Devices</a>
+							<li> <a href="#/unit1-4">Managing the Activity Lifecycle</a>
+							<li> <a href="#/unit1-5">Building a Dynamic UI with Fragments</a>
+							<li> <a href="#/unit1-6">Saving Data</a>
+							<li> <a href="#/unit1-7">Interacting with Other Apps</a>
+						</ul>
+					</section>
+
+					<section id="unit1-1">
+						<br><h2> <a href="#/unit1">#1.</a>1 Building The First App</h2><br>
+						<ul>
+							<li> Creating an Android Project
+							<li> Running your application 
+							<li> Building a simple user interface activity
+							<li> Starting another activity
+						</ul>
+					</section>
+
+					<section id="unit1-2">
+						<br><h2><a href="#/unit1">#1.</a>2 Adding the Action Bar</h2><br>
+						<ul>
+							<li> Setting up the Action Bar
+							<li> Adding Action Buttons
+							<li> Stylng the Action Bar
+							<li> Overlaying the Action Bar
+						</ul>
+					</section>
+
+					<section id="unit1-3">
+						<br><h2><a href="#/unit1">#1.</a>3 Supporting Different Devices</h2><br>
+						<ul>
+							<li> Supporting Different Languages
+							<li> Supporting Different Screens
+							<li> Supporting Different Platform Versions
+						</ul>
+					</section>
+
+					<section id="unit1-4">
+						<br><h2><a href="#/unit1">#1.</a>4 Managing the Activity Lifecycle</h2><br>
+						<ul>
+							<li> Starting an Activity
+							<li> Pausing and Resuming an Activity
+							<li> Stopping and Restarting an Activity
+							<li> Recreating an Activity
+						</ul>
+					</section>
+
+					<section id="unit1-5">
+						<br><h2><a href="#/unit1">#1.</a>5 Building a Dynamic UI with Fragments</h2><br>
+						<ul>
+							<li> Creating a Fragment
+							<li> Building a Flexible UI
+							<li> Communicating with Other Fragments
+						</ul>
+					</section>
+
+					<section id="unit1-6">
+						<br><h2><a href="#/unit1">#1.</a>6 Saving Data</h2><br>
+						<ul>
+							<li> Saving Key-Value Sets
+							<li> Saving Files
+							<li> Saving Data in SQL Databases
+						</ul>
+					</section>
+
+					<section id="unit1-7">
+						<br><h2><a href="#/unit1">#1.</a>7 Interacting with Other Apps</h2><br>
+						<ul>
+							<li> Sending the User to Another App
+							<li> Getting a Result from the Activity
+							<li> Allowing Other Apps to Start Your Activity
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit2: Content Sharing-->
+				<section>
+					<section id="unit2">
+						<br><h2><a href="unit2/index.html">#2.</a> Content Sharing </h2><br>
+
+						<ul>
+							<li> <a href="#/unit2-1">Sharing Simple Data</a>
+							<li> <a href="#/unit2-2">Sharing Files</a>
+							<li> <a href="#/unit2-3">Sharing with NFC</a>
+						</ul>
+					</section>
+
+					<section id="unit2-1">
+						<br><h2><a href="#/unit2">#2.</a>1 Sharing Simple Data</h2><br>
+						<ul>
+							<li> Sending simple data to other apps
+							<li> Receiving simple data from other apps
+							<li> Adding an easy share action
+						</ul>
+					</section>
+
+					<section id="unit2-2">
+						<br><h2><a href="#/unit2">#2.</a>2 Sharing Files</h2><br>
+						<ul>
+							<li> Setting up file sharing
+							<li> Sharing a file
+							<li> Requesting a shared file
+							<li> Retrieving file information
+						</ul>
+					</section>
+
+					<section id="unit2-3">
+						<br><h2><a href="#/unit2">#2.</a>3 Sharing With NFC</h2><br>
+						<ul>
+							<li> Sending files to another device
+							<li> Receiving files from another device
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit3: Multimedia-->
+				<section>
+					<section id="unit3">
+						<br><h2><a href="unit3/index.html">#3.</a> Multimedia </h2><br>
+
+						<ul>
+							<li> <a href="#/unit3-1">Managing Audio Playback</a>
+							<li> <a href="#/unit3-2">Capturing Photos</a>
+							<li> <a href="#/unit3-3">Printing Content</a>
+						</ul>
+					</section>
+
+					<section id="unit3-1">
+						<br><h2><a href="#/unit3">#3.</a>1 Managing Audio Playback</h2><br>
+						<ul>
+							<li> Controlling your app's volume and playback
+							<li> Managing audio focus
+							<li> Dealing with audio output hardware
+						</ul>
+					</section>
+					<section id="unit3-2">
+						<br><h2><a href="#/unit3">#3.</a>2 Capturing Photos</h2><br>
+						<ul>
+							<li> Taking photos simply
+							<li> Recording videos simply
+							<li> Controlling the camera
+						</ul>
+					</section>
+					<section id="unit3-3">
+						<br><h2><a href="#/unit3">#3.</a>3 Printing Content</h2><br>
+						<ul>
+							<li> Photos
+							<li> HTML Documents
+							<li> Custom Documents
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit4: Graphics & Animation-->
+				<section>
+					<section id="unit4">
+						<br><h2><a href="unit4/index.html">#4.</a> 
+						Graphics & Animation </h2><br>
+
+						<ul>
+							<li> <a href="#/unit4-1">Displaying Bitmaps Efficiently</a>
+							<li> <a href="#/unit4-2">Displaying Graphics with OpenGL ES</a>
+							<li> <a href="#/unit4-3">Adding Animations</a>
+						</ul>
+					</section>
+
+					<section id="unit4-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit5: Connectivity & The Cloud-->
+				<section>
+					<section id="unit5">
+						<br><h2><a href="unit5/index.html">#5.</a> 
+						Connectivity & The Cloud </h2><br>
+
+						<ul>
+							<li> <a href="#/unit5-1">Connecting Devices Wirelessly</a>
+							<li> <a href="#/unit5-2">Performing Network Operations</a>
+							<li> <a href="#/unit5-3">Transferring Data Without Draining Battery</a>
+							<li> <a href="#/unit5-4">Syncing to the Cloud</a>
+							<li> <a href="#/unit5-5">Resolving Cloud Save Conflicts</a>
+							<li> <a href="#/unit5-6">Transferring Data using Sync Adapters</a>
+						</ul>
+					</section>
+
+					<section id="unit5-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit6: User Info & Location -->
+				<section>
+					<section id="unit6">
+						<br><h2><a href="unit6/index.html">#6.</a> 
+						User Info & Location </h2><br>
+
+						<ul>
+							<li> <a href="#/unit6-1">Accessing Contacts Data</a>
+							<li> <a href="#/unit6-2">Making your App Location-Aware</a>
+						</ul>
+					</section>
+
+					<section id="unit6-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit7: Interaction & Engagement -->
+				<section>
+					<section id="unit7">
+						<br><h2><a href="unit7/index.html">#7.</a> 
+						Interaction & Engagement </h2><br>
+
+						<ul>
+							<li> Designing Effective Navigation
+							<li> Implementing Effective Navigation
+							<li> Notifying the User
+							<li> Adding Search Functionality
+							<li> Making App Content
+						</ul>
+					</section>
+
+				</section>
+
+				<!-- Unit8: User Interface -->
+				<section>
+					<section id="unit8">
+						<br><h2><a href="unit8/index.html">#8.</a> 
+						User Interface </h2><br>
+
+						<ul>
+							<li> <a href="#/unit8-1">Designing for Multiple Screens</a>
+							<li> <a href="#/unit8-2">Designing for TV</a>
+							<li> <a href="#/unit8-3">Creating Custom Views</a>
+							<li> <a href="#/unit8-4">Creating Backward-Compatible UIs</a>
+							<li> <a href="#/unit8-5">Implementing Accessibility</a>
+							<li> <a href="#/unit8-6">Managing System UI</a>
+						</ul>
+					</section>
+
+					<section id="unit8-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit9: User Input-->
+				<section>
+					<section id="unit9">
+						<br><h2><a href="unit9/index.html">#9.</a> 
+						User Input </h2><br>
+
+						<ul>
+							<li> <a href="#/unit9-1">Using Touch Gestures</a>
+							<li> <a href="#/unit9-2">Handling Keyboard Input</a>
+							<li> <a href="#/unit9-3">Supporting Game Controllers</a>
+						</ul>
+					</section>
+
+					<section id="unit9-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit10: Background Jobs-->
+				<section>
+					<section id="unit10">
+						<br><h2><a href="unit10/index.html">#10.</a> 
+						Background Jobs </h2><br>
+
+						<ul>
+							<li> <a href="#/unit10-1">Running in a Background Service</a>
+							<li> <a href="#/unit10-2">Loading Data in the Background</a>
+							<li> <a href="#/unit10-3">Managing Device Stay Awake State</a>
+						</ul>
+					</section>
+
+					<section id="unit10-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit11: Performance-->
+				<section>
+					<section id="unit11">
+						<br><h2><a href="unit11/index.html">#11.</a> 
+						Performance </h2><br>
+
+						<ul>
+							<li> <a href="#/unit11-1">Managing App Memory</a>
+							<li> <a href="#/unit11-2">Performance Tips</a>
+							<li> <a href="#/unit11-3">Improving Layout Performance</a>
+							<li> <a href="#/unit11-4">Optimizing Battery Life</a>
+							<li> <a href="#/unit11-5">Sending Operations to Multiple Threads</a>
+							<li> <a href="#/unit11-6">Keeping App Responsive</a>
+							<li> <a href="#/unit11-7">JNI Tips</a>
+							<li> <a href="#/unit11-8">SMP Primer for Android</a>
+						</ul>
+					</section>
+
+					<section id="unit11-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit12: Security & Privacy-->
+				<section>
+					<section id="unit12">
+						<br><h2><a href="unit12/index.html">#12.</a> 
+						 Security & Privacy</h2><br>
+
+						<ul>
+							<li> <a href="#/unit12-1">Security Tips</a>
+							<li> <a href="#/unit12-2">Security with HTTPS and SSL</a>
+							<li> <a href="#/unit12-3">Developing with Enterprise</a>
+						</ul>
+					</section>
+
+					<section id="unit12-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit13: Testing-->
+				<section>
+					<section id="unit13">
+						<br><h2><a href="unit13/index.html">#13.</a> 
+						Testing </h2><br>
+
+						<ul>
+							<li> <a href="#/unit13-1">Testing your activity</a>
+						</ul>
+					</section>
+
+					<section id="unit13-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit14: Distribute & Monetize-->
+				<section>
+					<section id="unit14">
+						<br><h2><a href="unit14/index.html">#14.</a> 
+						Distribute & Monetize </h2><br>
+
+						<ul>
+							<li> <a href="#/unit14-1">Selling in-app products</a>
+							<li> <a href="#/unit14-2">Maintaining multiple APKs</a>
+							<li> <a href="#/unit14-3">Monetizing your app</a>
+						</ul>
+					</section>
+
+					<section id="unit14-1">
+						<br><h2> </h2><br>
+						<ul>
+							<li> 
+						</ul>
+					</section>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				slideNumber: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'cube', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: '../img/damask.jpeg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

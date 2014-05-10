@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Android Development For Beginners: Unit 10</title>
+
+		<meta name="description" content="Android Development For Beginners: Unit 10<">
+		<meta name="author" content="Nitya Narasimhan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../css/reveal.min.css">
+		<link rel="stylesheet" href="../css/theme/moon.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">			
+
+				<section>
+					<h1>Services & Background Jobs</h1>
+					<h3> Android Best Practices: Unit 10</h3>
+					<br><br>
+					<h6><a href="http://google.com/+NityaNarasimhan">Nitya Narasimhan</a></bold></h6>
+					<br><br>
+					References
+					<br><small>
+					<a href="http://developer.android.com/training/index.html">Android Developers Website</a><br>
+					<a href="https://github.com/commonsguy/cw-omnibus">Commonsware Tutorials </a></small>
+				</section>
+
+
+				<!-- Unit10: Services & Background Jobs-->
+				<section id="unit10">
+					<br><h2> <a href="../index.html#/unit10">#10.</a> Services & Background Jobs</h2><br>
+
+					<ul>
+						<li> <a href="#/unit10-1">About Services</a>
+						<li> <a href="#/unit10-2">Running in a Background Service</a>
+						<li> <a href="#/unit10-3">Loading Data in the Background</a>
+						<li> <a href="#/unit10-4">Managing Device Stay Awake State</a>
+						<br><br>
+						<li> <a href="#/unit10-5">Deconstructing a Real App</a>
+						<li> <a href="#/unit10-6">Services: Bound Service</a>
+						<li> <a href="#/unit10-7">Services: AIDL</a>
+					</ul>
+					<br><br>
+					<small>
+						Download <a href="http://developer.android.com/shareables/training/ThreadSample.zip"> ThreadSample.zip </a> (<a href="../projects/ThreadSample.zip">local</a>) and <a href="http://developer.android.com/shareables/training/Scheduler.zip"> Scheduler.zip </a> (<a href="../projects/Scheduler.zip">local</a>) <br>
+						Import to ADT and Run as Android Application<br>
+					</small>
+				</section>
+
+
+				<!-- Unit10.1: About Services -->
+				<section>
+					<section id="unit10-1">
+						<br><h2> <a href="#/unit10">#10.</a>1 About Services</h2><br>
+						<ul>
+							<li> <a href="#/unit10-1-0">Overview</a>
+							<li> <a href="#/unit10-1-1">The Basics</a>
+							<li> <a href="#/unit10-1-2">Creating a Started Service</a>
+							<li> <a href="#/unit10-1-3">Creating a Bound Service</a>
+							<li> <a href="#/unit10-1-4">Sending Notifications to the User</a>
+							<li> <a href="#/unit10-1-5">Running a Service in the Foreground</a>
+							<li> <a href="#/unit10-1-6">Managing the Lifecycle of a Service</a>
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-0">
+						<br><h2> <a href="#/unit10-1">#10.1</a> Overview </h2>
+						<ul>
+							<li> Headless, Long-Running Jobs
+							<li> Continues after app is switched/destroyed
+							<li> Can be 'bound' for interactive use
+							<li> Examples: Music Player, Feed Updater
+						</ul>
+						<br><br> 
+						CAUTION: Runs in main thread of host process
+
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#Basics"> Android Developers Reference </a></small>
+					</section>
+
+
+					<section id="unit10-1-0-0">
+						<br><h2> <a href="#/unit10-1">#10.1</a>0 Overview contd.. </h2>
+						<ul>
+							<li> Service types =  Started, Bound
+							<li> Intent activated = startService(), bindService()
+							<br><br>
+							<li> <i>Started</i> = single focus, runs till done/stopped
+							<li> <i>Bound</i> = interactive, runs till unbound by all
+							<br><br>
+							<li> <i>Private</i> =  declared, limits access to local app
+						</ul>
+
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#Basics"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-0-1">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>0.1 Creating a Service
+						</h2>
+						Subclass <a href="http://developer.android.com/reference/android/app/Service.html"> Service </a>.<br>Implement these Callbacks:
+						<br><br>
+						<ul>
+							<li> <i>onCreate()</i> - initial setup
+							<li> <i>onStartCommand()</i> - start service **
+							<li> <i>onBind()</i> - return IBinder (or null)
+							<li> <i>onUnbind()</i> - last client unbound
+							<li> <i>onDestroy()</i> - termination (resource cleanup)
+						</ul>
+						<br><br>
+						<small>** For unbound services, it's your responsiblity to stop the service <br>(<i>stopSelf()</i> or <i>stopService()</i>) when the requested work is done.</small>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#Basics"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-0-2">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>0.2 Service Lifecycle
+						</h2>
+						<img height=400 src="../img/10.1.service_lifecycle.png" />
+						<br>
+						
+						<small><a href="http://developer.android.com/guide/components/services.html#LifecycleCallbacks"> Android Developers Reference </a></small>
+					</section>
+
+					
+
+					<section id="unit10-1-1">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>1 The Basics
+						</h2>
+						Declare service in Manifest
+						<pre><code>
+<manifest ... >
+  ...
+  <application ... >
+      <service android:name=".ExampleService">
+      </service>
+      ...
+  </application>
+</manifest>
+						</code></pre>
+						<small>
+						Use explicit intents for secure use: No intent-filter declared<br>
+						Limit access with permissions: Set 'android:exported' to false.
+						</small>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#Basics"> Android Developers Reference </a></small>
+					</section>
+
+
+					<section id="unit10-1-2">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2 Creating a Started Service
+						</h2>
+						<ul>
+							<li> Caller invokes startService, passing Intent
+							<li> Service receives Intent in onStartCommand()
+							<li> Service runs in main thread of host application
+							<br><br>
+							<li> Use "IntentService" subclass for async worker
+							<li> <i>Pro:</i> Simple. Just implement onHandleIntent()
+							<li> <i>Con:</i> Queue. Handles only 1 request at a time
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#CreatingAService"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-2-0">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2.0 Service Modes
+						</h2>
+						<i>onStartCommand()</i> returns service mode (integer) <br><br>
+						Tells system how to handle restarts<br> if service killed prematurely<br><br>
+						<small>
+						<ul>
+							<li> <a href="http://developer.android.com/reference/android/app/Service.html#START_NOT_STICKY">START_NOT_STICKY</a> do not recreate (unless pending intents)
+							<li> <a href="http://developer.android.com/reference/android/app/Service.html#START_STICKY">START_STICKY</a> recreate (but don't redeliver last intent)
+							<li> <a href="http://developer.android.com/reference/android/app/Service.html#START_REDELIVER_INTENT">START_REDILVER_INTENT</a> recreate (and redeliver last intent)
+						</ul>
+					</small>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#Basics"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-2-1">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2.1 'Managed' Service
+						</h2>
+						<pre><code>
+public class HelloService extends Service {
+  private Looper mServiceLooper;
+  private ServiceHandler mServiceHandler;
+
+  // Handler that receives messages from the thread
+  private final class ServiceHandler extends Handler {
+      public ServiceHandler(Looper looper) {
+          super(looper);
+      }
+      @Override
+      public void handleMessage(Message msg) {
+          // Normally we would do some work here, like download a file.
+          // For our sample, we just sleep for 5 seconds.
+          long endTime = System.currentTimeMillis() + 5*1000;
+          while (System.currentTimeMillis() < endTime) {
+              synchronized (this) {
+                  try {
+                      wait(endTime - System.currentTimeMillis());
+                  } catch (Exception e) {
+                  }
+              }
+          }
+          // Stop the service using the startId, so that we don't stop
+          // the service in the middle of handling another job
+          stopSelf(msg.arg1);
+      }
+  }
+
+  @Override
+  public void onCreate() {
+    // Start up the thread running the service.  Note that we create a
+    // separate thread because the service normally runs in the process's
+    // main thread, which we don't want to block.  We also make it
+    // background priority so CPU-intensive work will not disrupt our UI.
+    //
+    // android.os.HandlerThread is a utility class for starting a new thread
+    // with a built-in 'looper' to process incoming messges in a loop
+    HandlerThread thread = new HandlerThread("ServiceStartArguments",
+            Process.THREAD_PRIORITY_BACKGROUND);
+    thread.start();
+
+    // Get the HandlerThread's Looper and use it for our Handler
+    //
+    // Effectively have the utility looper run on the single thread above
+    // but have it now notify (callback) our custom handler for each message
+    mServiceLooper = thread.getLooper();
+    mServiceHandler = new ServiceHandler(mServiceLooper);
+  }
+
+  @Override
+  public int onStartCommand(Intent intent, int flags, int startId) {
+      Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+
+      // For each start request, send a message to start a job and deliver the
+      // start ID so we know which request we're stopping when we finish the job
+      Message msg = mServiceHandler.obtainMessage();
+      msg.arg1 = startId;
+      mServiceHandler.sendMessage(msg);
+
+      // If we get killed, after returning from here, restart
+      return START_STICKY;
+  }
+
+  @Override
+  public IBinder onBind(Intent intent) {
+      // We don't provide binding, so return null
+      return null;
+  }
+
+  @Override
+  public void onDestroy() {
+    Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+  }
+}
+						</code></pre>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#CreatingAService"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-2-2">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2.2 IntentService (simple)
+						</h2>
+						<pre><code>
+public class HelloIntentService extends IntentService {
+
+  /**
+   * A constructor is required, and must call the super IntentService(String)
+   * constructor with a name for the worker thread.
+   */
+  public HelloIntentService() {
+      super("HelloIntentService");
+  }
+
+  /**
+   * The IntentService calls this method from the default worker thread with
+   * the intent that started the service. When this method returns, IntentService
+   * stops the service, as appropriate.
+   */
+  @Override
+  protected void onHandleIntent(Intent intent) {
+      // Normally we would do some work here, like download a file.
+      // For our sample, we just sleep for 5 seconds.
+      long endTime = System.currentTimeMillis() + 5*1000;
+      while (System.currentTimeMillis() < endTime) {
+          synchronized (this) {
+              try {
+                  wait(endTime - System.currentTimeMillis());
+              } catch (Exception e) {
+              }
+          }
+      }
+  }
+}
+						</code></pre>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#CreatingAService"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-2-3">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2.3 Activating Services
+						</h2>
+						<br>
+						<pre><code>
+Intent intent = new Intent(this, HelloService.class);
+startService(intent);
+						</code></pre>
+						<br>
+						The onStartCommand() returns an integer informing System how to handle service restarts after premature termination.
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#CreatingAService"> Android Developers Reference </a></small>
+					</section>
+
+
+					<section id="unit10-1-2-4">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2.4 "Local" Service 
+						</h2>
+						<pre><code>
+public class LocalService extends Service {
+    private NotificationManager mNM;
+
+    // Unique Identification Number for the Notification.
+    // We use it on Notification start, and to cancel it.
+    private int NOTIFICATION = R.string.local_service_started;
+
+    /**
+     * Class for clients to access.  Because we know this service always
+     * runs in the same process as its clients, we don't need to deal with
+     * IPC.
+     */
+    public class LocalBinder extends Binder {
+        LocalService getService() {
+            return LocalService.this;
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+        // Display a notification about us starting.  We put an icon in the status bar.
+        showNotification();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i("LocalService", "Received start id " + startId + ": " + intent);
+        // We want this service to continue running until it is explicitly
+        // stopped, so return sticky.
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        // Cancel the persistent notification.
+        mNM.cancel(NOTIFICATION);
+
+        // Tell the user we stopped.
+        Toast.makeText(this, R.string.local_service_stopped, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+
+    // This is the object that receives interactions from clients.  See
+    // RemoteService for a more complete example.
+    private final IBinder mBinder = new LocalBinder();
+
+    /**
+     * Show a notification while this service is running.
+     */
+    private void showNotification() {
+        // In this sample, we'll use the same text for the ticker and the expanded notification
+        CharSequence text = getText(R.string.local_service_started);
+
+        // Set the icon, scrolling text and timestamp
+        Notification notification = new Notification(R.drawable.stat_sample, text,
+                System.currentTimeMillis());
+
+        // The PendingIntent to launch our activity if the user selects this notification
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, LocalServiceActivities.Controller.class), 0);
+
+        // Set the info for the views that show in the notification panel.
+        notification.setLatestEventInfo(this, getText(R.string.local_service_label),
+                       text, contentIntent);
+
+        // Send the notification.
+        mNM.notify(NOTIFICATION, notification);
+    }
+}
+						</code></pre>						
+						<small><a href="http://developer.android.com/reference/android/app/Service.html"> Android Developers Reference </a></small>
+					</section>
+
+
+					<section id="unit10-1-2-5">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2.5 Local Client (no IPC)
+						</h2>
+						<pre><code>
+private LocalService mBoundService;
+
+private ServiceConnection mConnection = new ServiceConnection() {
+    public void onServiceConnected(ComponentName className, IBinder service) {
+        // This is called when the connection with the service has been
+        // established, giving us the service object we can use to
+        // interact with the service.  Because we have bound to a explicit
+        // service that we know is running in our own process, we can
+        // cast its IBinder to a concrete class and directly access it.
+        mBoundService = ((LocalService.LocalBinder)service).getService();
+
+        // Tell the user about this for our demo.
+        Toast.makeText(Binding.this, R.string.local_service_connected,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    public void onServiceDisconnected(ComponentName className) {
+        // This is called when the connection with the service has been
+        // unexpectedly disconnected -- that is, its process crashed.
+        // Because it is running in our same process, we should never
+        // see this happen.
+        mBoundService = null;
+        Toast.makeText(Binding.this, R.string.local_service_disconnected,
+                Toast.LENGTH_SHORT).show();
+    }
+};
+
+void doBindService() {
+    // Establish a connection with the service.  We use an explicit
+    // class name because we want a specific service implementation that
+    // we know will be running in our own process (and thus won't be
+    // supporting component replacement by other applications).
+    bindService(new Intent(Binding.this, 
+            LocalService.class), mConnection, Context.BIND_AUTO_CREATE);
+    mIsBound = true;
+}
+
+void doUnbindService() {
+    if (mIsBound) {
+        // Detach our existing connection.
+        unbindService(mConnection);
+        mIsBound = false;
+    }
+}
+
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    doUnbindService();
+}
+						</code></pre>
+						<small><a href="http://developer.android.com/reference/android/app/Service.html"> Android Developers Reference </a></small>
+					</section>
+
+
+					<section id="unit10-1-2-6">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2.6 Remote Service (Messenger)
+						</h2>
+						<pre><code>
+public class MessengerService extends Service {
+    /** For showing and hiding our notification. */
+    NotificationManager mNM;
+    /** Keeps track of all current registered clients. */
+    ArrayList<Messenger> mClients = new ArrayList<Messenger>();
+    /** Holds last value set by a client. */
+    int mValue = 0;
+
+    /**
+     * Command to the service to register a client, receiving callbacks
+     * from the service.  The Message's replyTo field must be a Messenger of
+     * the client where callbacks should be sent.
+     */
+    static final int MSG_REGISTER_CLIENT = 1;
+
+    /**
+     * Command to the service to unregister a client, ot stop receiving callbacks
+     * from the service.  The Message's replyTo field must be a Messenger of
+     * the client as previously given with MSG_REGISTER_CLIENT.
+     */
+    static final int MSG_UNREGISTER_CLIENT = 2;
+
+    /**
+     * Command to service to set a new value.  This can be sent to the
+     * service to supply a new value, and will be sent by the service to
+     * any registered clients with the new value.
+     */
+    static final int MSG_SET_VALUE = 3;
+
+    /**
+     * Handler of incoming messages from clients.
+     */
+    class IncomingHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_REGISTER_CLIENT:
+                    mClients.add(msg.replyTo);
+                    break;
+                case MSG_UNREGISTER_CLIENT:
+                    mClients.remove(msg.replyTo);
+                    break;
+                case MSG_SET_VALUE:
+                    mValue = msg.arg1;
+                    for (int i=mClients.size()-1; i>=0; i--) {
+                        try {
+                            mClients.get(i).send(Message.obtain(null,
+                                    MSG_SET_VALUE, mValue, 0));
+                        } catch (RemoteException e) {
+                            // The client is dead.  Remove it from the list;
+                            // we are going through the list from back to front
+                            // so this is safe to do inside the loop.
+                            mClients.remove(i);
+                        }
+                    }
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    }
+
+    /**
+     * Target we publish for clients to send messages to IncomingHandler.
+     */
+    final Messenger mMessenger = new Messenger(new IncomingHandler());
+
+    @Override
+    public void onCreate() {
+        mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+        // Display a notification about us starting.
+        showNotification();
+    }
+
+    @Override
+    public void onDestroy() {
+        // Cancel the persistent notification.
+        mNM.cancel(R.string.remote_service_started);
+
+        // Tell the user we stopped.
+        Toast.makeText(this, R.string.remote_service_stopped, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * When binding to the service, we return an interface to our messenger
+     * for sending messages to the service.
+     */
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mMessenger.getBinder();
+    }
+
+    /**
+     * Show a notification while this service is running.
+     */
+    private void showNotification() {
+        // In this sample, we'll use the same text for the ticker and the expanded notification
+        CharSequence text = getText(R.string.remote_service_started);
+
+        // Set the icon, scrolling text and timestamp
+        Notification notification = new Notification(R.drawable.stat_sample, text,
+                System.currentTimeMillis());
+
+        // The PendingIntent to launch our activity if the user selects this notification
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, Controller.class), 0);
+
+        // Set the info for the views that show in the notification panel.
+        notification.setLatestEventInfo(this, getText(R.string.remote_service_label),
+                       text, contentIntent);
+
+        // Send the notification.
+        // We use a string id because it is a unique number.  We use it later to cancel.
+        mNM.notify(R.string.remote_service_started, notification);
+    }
+}
+						</code></pre>
+						<small><a href="http://developer.android.com/reference/android/app/Service.html"> Android Developers Reference </a></small>
+					</section>
+
+
+					<section id="unit10-1-2-7">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>2.7 Remote Client (Messenger)
+						</h2>
+						<pre><code>
+/** Messenger for communicating with service. */
+Messenger mService = null;
+/** Flag indicating whether we have called bind on the service. */
+boolean mIsBound;
+/** Some text view we are using to show state information. */
+TextView mCallbackText;
+
+/**
+ * Handler of incoming messages from service.
+ */
+class IncomingHandler extends Handler {
+    @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what) {
+            case MessengerService.MSG_SET_VALUE:
+                mCallbackText.setText("Received from service: " + msg.arg1);
+                break;
+            default:
+                super.handleMessage(msg);
+        }
+    }
+}
+
+/**
+ * Target we publish for clients to send messages to IncomingHandler.
+ */
+final Messenger mMessenger = new Messenger(new IncomingHandler());
+
+/**
+ * Class for interacting with the main interface of the service.
+ */
+private ServiceConnection mConnection = new ServiceConnection() {
+    public void onServiceConnected(ComponentName className,
+            IBinder service) {
+        // This is called when the connection with the service has been
+        // established, giving us the service object we can use to
+        // interact with the service.  We are communicating with our
+        // service through an IDL interface, so get a client-side
+        // representation of that from the raw service object.
+        mService = new Messenger(service);
+        mCallbackText.setText("Attached.");
+
+        // We want to monitor the service for as long as we are
+        // connected to it.
+        try {
+            Message msg = Message.obtain(null,
+                    MessengerService.MSG_REGISTER_CLIENT);
+            msg.replyTo = mMessenger;
+            mService.send(msg);
+
+            // Give it some value as an example.
+            msg = Message.obtain(null,
+                    MessengerService.MSG_SET_VALUE, this.hashCode(), 0);
+            mService.send(msg);
+        } catch (RemoteException e) {
+            // In this case the service has crashed before we could even
+            // do anything with it; we can count on soon being
+            // disconnected (and then reconnected if it can be restarted)
+            // so there is no need to do anything here.
+        }
+
+        // As part of the sample, tell the user what happened.
+        Toast.makeText(Binding.this, R.string.remote_service_connected,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    public void onServiceDisconnected(ComponentName className) {
+        // This is called when the connection with the service has been
+        // unexpectedly disconnected -- that is, its process crashed.
+        mService = null;
+        mCallbackText.setText("Disconnected.");
+
+        // As part of the sample, tell the user what happened.
+        Toast.makeText(Binding.this, R.string.remote_service_disconnected,
+                Toast.LENGTH_SHORT).show();
+    }
+};
+
+void doBindService() {
+    // Establish a connection with the service.  We use an explicit
+    // class name because there is no reason to be able to let other
+    // applications replace our component.
+    bindService(new Intent(Binding.this, 
+            MessengerService.class), mConnection, Context.BIND_AUTO_CREATE);
+    mIsBound = true;
+    mCallbackText.setText("Binding.");
+}
+
+void doUnbindService() {
+    if (mIsBound) {
+        // If we have received the service, and hence registered with
+        // it, then now is the time to unregister.
+        if (mService != null) {
+            try {
+                Message msg = Message.obtain(null,
+                        MessengerService.MSG_UNREGISTER_CLIENT);
+                msg.replyTo = mMessenger;
+                mService.send(msg);
+            } catch (RemoteException e) {
+                // There is nothing special we need to do if the service
+                // has crashed.
+            }
+        }
+
+        // Detach our existing connection.
+        unbindService(mConnection);
+        mIsBound = false;
+        mCallbackText.setText("Unbinding.");
+    }
+}						</code></pre>
+						<small><a href="http://developer.android.com/reference/android/app/Service.html"> Android Developers Reference </a></small>
+					</section>
+
+
+
+					<section id="unit10-1-3">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>3 Creating a Bound Service
+						</h2>
+						<br><br>
+						<ul>
+							<li> Implement onBind() callback
+							<li> Return IBinder subclass = service interface
+							<li> Client binds to service = gets IBinder
+							<li> Client unbinds = system destroys service
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#CreatingBoundService"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-4">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>4 Sending User Notifications
+						</h2>
+						<br><br>
+						Will be covered in future lecture <br>
+						on Notifications/Toasts
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/services.html#Notifications"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-5">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>5 Running in Foreground
+						</h2>
+						<ul>
+							<li> If user is actively aware of service (media player)
+							<li> Must provide notification in status bar (see code)
+							<li> Service calls <i>startForeground()</i>, <i>stopForeground()</i>
+						</ul>
+						<br>
+						<pre><code>
+Notification notification = 
+	new Notification(R.drawable.icon, getText(R.string.ticker_text),
+        System.currentTimeMillis());
+
+Intent notificationIntent = new Intent(this, ExampleActivity.class);
+PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+notification.setLatestEventInfo(this, getText(R.string.notification_title),
+        getText(R.string.notification_message), pendingIntent);
+
+startForeground(ONGOING_NOTIFICATION_ID, notification);
+						</code></pre>
+						<br>
+						<small><a href="http://developer.android.com/guide/components/services.html#Foreground"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-6">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>6 Lifecycle Revisited
+						</h2>
+						<img height=400 src="../img/10.1.service_lifecycle.png" />
+						<br>
+						
+						<small><a href="http://developer.android.com/guide/components/services.html#LifecycleCallbacks"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-1-7">
+						<br><h2> 
+							<a href="#/unit10-1">#10.1.</a>7 Managing Service Lifecycle
+						</h2>
+						<br>
+						<pre><code>
+public class ExampleService extends Service {
+    int mStartMode;       // indicates how to behave if the service is killed
+    IBinder mBinder;      // interface for clients that bind
+    boolean mAllowRebind; // indicates whether onRebind should be used
+
+    @Override
+    public void onCreate() {
+        // The service is being created
+    }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // The service is starting, due to a call to startService()
+        return mStartMode;
+    }
+    @Override
+    public IBinder onBind(Intent intent) {
+        // A client is binding to the service with bindService()
+        return mBinder;
+    }
+    @Override
+    public boolean onUnbind(Intent intent) {
+        // All clients have unbound with unbindService()
+        return mAllowRebind;
+    }
+    @Override
+    public void onRebind(Intent intent) {
+        // A client is binding to the service with bindService(),
+        // after onUnbind() has already been called
+    }
+    @Override
+    public void onDestroy() {
+        // The service is no longer used and is being destroyed
+    }
+}
+						</code></pre>
+						<br>
+						<small><a href="http://developer.android.com/guide/components/services.html#Lifecycle"> Android Developers Reference </a></small>
+					</section>
+				</section>
+
+
+				<!-- Unit10.2: Running in a Background Service -->
+				<section>
+					<section id="unit10-2">
+						<br><h2> <a href="#/unit10">#10.</a>2 The Background Service</h2>
+						<i> Self-Study (Flipped Learning) </i><br>
+						<a href="http://developer.android.com/shareables/training/ThreadSample.zip"> ThreadSample.zip </a>
+						<br>
+						<br>
+						<ul>
+							<li> Creating a Background Service
+							<li> Sending Work Requests 
+							<li> Reporting Work Status
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/run-background-service/index.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-2-1">
+						<br><h2> 
+							<a href="#/unit10-2">#10.2.</a>1 Creating The Service
+						</h2>
+						<ul>
+							<li> Create an Intent Service
+							<li> Define the Intent Service in the Manifest
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/run-background-service/create-service.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-2-2">
+						<br><h2> 
+							<a href="#/unit10-2">#10.2.</a>2 Sending Work Requests
+						</h2>
+						<ul>
+							<li> Create an Intent Service
+							<li> Define the Intent Service in the Manifest
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/run-background-service/send-request.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-2-3">
+						<br><h2> 
+							<a href="#/unit10-2">#10.2.</a>3 Reporting Work Status
+						</h2>
+						<ul>
+							<li> Report Status from an IntentService
+							<li> Receive Status Broadcasts from an IntentService
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/run-background-service/report-status.html"> Android Developers Reference </a></small>
+					</section>
+				</section>
+
+
+				<!-- Unit10.3: Loading Data in the Background -->
+				<section>
+					<section id="unit10-3">
+						<br><h2> <a href="#/unit10">#10.</a>3 Loading Data (Background)</h2><br>
+						<i> Self-Study (Flipped Learning) </i><br>
+						<a href="http://developer.android.com/shareables/training/ThreadSample.zip"> ThreadSample.zip </a>
+						<br>
+						<br>
+						<ul>
+							<li> Running a Query with a Cursor Loader
+							<li> Handling the Results
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/load-data-background/index.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-3-1">
+						<br><h2> 
+							<a href="#/unit10-3">#10.3.</a>1 Query with Cursor Loader
+						</h2>
+						<ul>
+							<li> Define Activity that uses Cursor Loader
+							<li> Initialize the Query
+							<li> Start the Query
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/load-data-background/setup-loader.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-3-2">
+						<br><h2> 
+							<a href="#/unit10-3">#10.3.</a>2 Handling The Results
+						</h2>
+						<ul>
+							<li> Handle Query Results
+							<li> Delete Old Cursor References
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/load-data-background/handle-results.html"> Android Developers Reference </a></small>
+					</section>
+				</section>
+
+
+				<!-- Unit10.4: Managing Device Stay Awake State -->
+				<section>
+					<section id="unit10-4">
+						<br><h2> <a href="#/unit10">#10.</a>4 Managing Device Awake State </h2><br>
+						<i> Self-Study (Flipped Learning) </i><br>
+						<a href="http://developer.android.com/shareables/training/Scheduler.zip"> Scheduler.zip </a>
+						<br>
+						<br>
+						<ul>
+							<li> Keeping the Device Awake
+							<li> Scheduling Repeating Alarms
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/scheduling/index.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-4-1">
+						<br><h2> 
+							<a href="#/unit10-4">#10.4.</a>1 Keeping the Device Awake
+						</h2>
+						<ul>
+							<li> Keep the Screen On
+							<li> Keep the CPU On
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/scheduling/wakelock.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-4-2">
+						<br><h2> 
+							<a href="#/unit10-4">#10.4.</a>2 Scheduling Repeating Alarms
+						</h2>
+						<ul>
+							<li> Understand the Tradeoffs
+							<li> Set a Repeating Alarm
+							<li> Cancel an Alarm
+							<li> Start an Alarm when the Device Boots
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/training/scheduling/alarms.html"> Android Developers Reference </a></small>
+					</section>
+				</section>
+
+
+				<!-- Unit10.5: Deconstructing A Real App-->
+				<section data-background="green" id="unit10-deconstruct">
+					<section id="unit10-5">				
+						<br><h2> 
+							<a href="#/unit10">#10.</a>5 Analyzing: 'Elementary'
+						</h2>
+						<i> Self-Study (Flipped Learning) </i><br>
+						<img src="../img/10.5.elementary.png" />
+						<br>
+						Install app from <a href="https://play.google.com/store/apps/details?id=com.ultramegatech.ey">Play Store</a><br>
+						Check out code from <a href="https://f-droid.org/repository/browse/?fdfilter=Elementary&fdid=com.ultramegatech.ey">F-Droid</a><br>
+					</section>
+				</section>
+
+
+				<!-- Unit10.6: Services: Bound Service -->
+				<section>
+					<section id="unit10-6">
+						<br><h2> <a href="#/unit10">#10.</a>6 Services: Bound Service</h2><br>
+						<ul>
+							<li> The Basics
+							<li> Creating a Bound Service
+							<li> Binding to a Service
+							<li> Managing the Lifecycle of a Bound Service
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/bound-services.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-6-1">
+						<br><h2> 
+							<a href="#/unit10-6">#10.6.</a>1 The Basics
+						</h2>
+						<ul>
+							<li> 
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/bound-services.html#Basics"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-6-2">
+						<br><h2> 
+							<a href="#/unit10-6">#10.6.</a>2 Creating a Bound Service
+						</h2>
+						<ul>
+							<li> 
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/bound-services.html#Creating"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-6-3">
+						<br><h2> 
+							<a href="#/unit10-6">#10.6.</a>3 Binding to a Service
+						</h2>
+						<ul>
+							<li> 
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/bound-services.html#Binding"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-6-4">
+						<br><h2> 
+							<a href="#/unit10-6">#10.6.</a>4 Managing the Lifecycle..
+						</h2>
+						<img height=500 src="http://developer.android.com/images/fundamentals/service_binding_tree_lifecycle.png" />
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/bound-services.html#Lifecycle"> Android Developers Reference </a></small>
+					</section>
+				</section>
+
+
+				<!-- Unit10.7: Services: AIDL -->
+				<section>
+					<section id="unit10-7">
+						<br><h2> <a href="#/unit10">#10.</a>7 Services: AIDL</h2><br>
+						<ul>
+							<li> Defining an AIDL Interface
+							<li> Passing Objects over IPC
+							<li> Calling an IPC Method
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/aidl.html"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-7-1">
+						<br><h2> 
+							<a href="#/unit10-7">#10.7.</a>1 Defining an AIDL Interface
+						</h2>
+						<ul>
+							<li> 
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/aidl.html#Defining"> Android Developers Reference </a></small>
+					</section>
+
+					<section id="unit10-7-2">
+						<br><h2> 
+							<a href="#/unit10-7">#10.7.</a>2 Passing Objects Over IPC
+						</h2>
+						<ul>
+							<li> 
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/aidl.html#PassingObjects"> Android Developers Reference </a></small>
+					</section>
+
+
+					<section id="unit10-7-3">
+						<br><h2> 
+							<a href="#/unit10-7">#10.7.</a>3 Calling an IPC Method
+						</h2>
+						<ul>
+							<li> 
+						</ul>
+						<br><br>
+						<small><a href="http://developer.android.com/guide/components/aidl.html#Calling"> Android Developers Reference </a></small>
+					</section>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in / ../css/theme
+				transition: Reveal.getQueryHash().transition || 'cube', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

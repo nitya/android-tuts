@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Android Development For Beginners: Unit 7</title>
+
+		<meta name="description" content="Android Development For Beginners: Unit 7<">
+		<meta name="author" content="Nitya Narasimhan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../css/reveal.min.css">
+		<link rel="stylesheet" href="../css/theme/moon.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">			
+
+				<section>
+					<h1>Interaction & Engagement</h1>
+					<h3> Android Best Practices: Unit 7</h3>
+					<br><br>
+					<h6><a href="http://google.com/+NityaNarasimhan">Nitya Narasimhan</a></bold></h6>
+					<br><br>
+					References
+					<br><small>
+					<a href="http://developer.android.com/training/index.html">Android Developers Website</a><br>
+					<a href="https://github.com/commonsguy/cw-omnibus">Commonsware Tutorials </a></small>
+				</section>
+
+
+				<!-- Unit7: Interaction & Engagement -->
+				<section id="unit7">
+					<br><h2> <a href="../index.html#/unit7">#7.</a> Interaction & Engagement</h2><br>
+
+					<ul>
+						<li> <a href="#/unit7-1">Designing Effective Navigation</a>
+						<li> <a href="#/unit7-2">Implementing Effective Navigation</a>
+						<li> <a href="#/unit7-3">Supporting Different Devices</a>
+						<li> <a href="#/unit7-4">Notifying the User</a>
+						<li> <a href="fragment.html#/unit7-5">Adding Search Functionality</a>
+						<li> <a href="fragment.html#/unit7-6">Making Your App Content Searchable By Google</a>
+					</ul>
+				</section>
+
+				<!-- Unit7.1: Designing Effective Navigation -->
+				<section>
+					<section id="unit7-1">
+						<br><h2> <a href="#/unit7">#7.</a>1 Designing Effective Navigation</h2><br>
+						<ul>
+							<li> Planning Screens & Their Relationships 
+							<li> Planning for Multiple Touchscreen Sizes 
+							<li> Providing Descendant & Lateral Navigation 
+							<li> Providing Ancestral & Temporal Navigation
+							<li> <a href="#/unit7-1-15">Wireframing the Example App</a>
+						</ul>
+					</section>
+
+					<section id="unit7-1-1">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>1 Planning Screens & Their Relationships
+						</h2>
+						<a href="#" class="image"> 
+							<img height=375 src="../img/7.1.screen.planning.erd.png"/> </a> <br>
+						<small>Information Model: What 'types' of things does your user interact with? </small>
+					</section>
+
+					<section id="unit7-1-2">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>1.1 Create a Screen List
+						</h2>
+						<ul>
+							<li> When does user interact with data (contexts)
+							<li> How does he interact (read, create, update, delete)
+							<li> What is the exhaustive set of screens?
+						</ul>
+						<br><br>
+						<ul>
+							<li> Category List, Story List, Photos List
+							<li> Story Detail, Photo Detail
+							<li> (Saved) Story List, (Saved) Photo List
+							<li> Home (lobby), Profile, Settings,..
+						</ul>
+					</section>
+
+					<section id="unit7-1-3">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>3 Screen Map for News App
+						</h2>
+						<a href="#" class="image"> 
+							<img height=375 src="../img/7.1.screen.maps.png"/> </a>
+						<br>
+						<small>Enough for 'Simplistic' UI Design <br>
+						Buttons for navigating, lists for information, layouts for detail </small>
+					</section>
+
+
+					<section id="unit7-1-4">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>4 Plan for Multiple Screen Sizes
+						</h2>
+						<a href="#" class="image"> 
+							<img width=375 src="../img/7.1.singlepane.png"/> </a>
+						<a href="#" class="image"> 
+							<img width=375  src="../img/7.1.multipane.png"/> </a>
+						<br>
+						<small>Determine the screen size at which you want to flip from single pane to multi-pane layouts <br>
+						Screen implemented as Activity. Content always implemented as Fragment.
+						</small>
+					</section>
+
+					<section id="unit7-1-5">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>5 Design for Table 'Orientation'
+						</h2>
+						<a href="#" class="image"> 
+							<img width=375 src="../img/7.1.layout.stretch.png"/> </a>
+						<a href="#" class="image"> 
+							<img width=375 src="../img/7.1.layout.collapse.png"/> </a>
+						<a href="#" class="image"> 
+							<img width=375 src="../img/7.1.layout.show-hide.png"/> </a>
+						<a href="#" class="image"> 
+							<img width=375  src="../img/7.1.stack.png"/> </a>
+						<br>
+						<small> (Clockwise, from top-left) Stretch-to-fit (some panes may be fixed), Collapse-left (e.g., list shrunk, details expanded), Show-Hide (e.g., list hidden, needs affordances), Stack (for multi-pane content)
+						</small>
+					</section>
+
+					<section id="unit7-1-6">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>6 Screen Map for News App
+						</h2>
+						<a href="#" class="image"> 
+							<img height=375 src="../img/7.1.screen.groups.png"/> </a>
+						<br>
+						<small> Revisit your exhaustive screen maps list. Identify 'groups' that can be shown in multi-pane layouts</small>
+					</section>
+
+					<section id="unit7-1-7">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>7 Descendant and Lateral Navigation
+						</h2>
+						<a href="#" class="image"> 
+							<img height=375 src="../img/7.descendant.lateral.png"/> </a>
+						<br>
+						<small> Understand navigation hierarchy. <br>
+						 <i>Descendant</i> navigation is for child content, <i>Lateral</i> navigation is for sibling content</small>
+					</section>
+
+					<section id="unit7-1-8">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>8 Sibling Screens (2 Types)
+						</h2>
+						<a href="#" class="image"> 
+							<img height=375 src="../img/7.siblings.png"/> </a>
+						<br>
+						<small> Collection = Items in collecton represented by 'parent' <br>
+							Section = Different aspects of information about 'parent' <br>
+							User Interface Design Patterns for both
+						</small>
+					</section>
+
+					<section id="unit7-1-9">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>9 Buttons & Targets
+						</h2>
+						<a href="#" class="image"> 
+							<img height=375 src="../img/7.buttons.targets.png"/> </a>
+						<br>
+						'Dashboard' Pattern (touchable, kb-focusable targets. <br>
+						Ideal for Section Siblings. Rethink for large devices.
+					</section>
+
+					<section id="unit7-1-10">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>10 Lists, Grids, Carousels, Stacks
+						</h2>
+						<a href="#" class="image"> 
+							<img height=375 src="../img/7.lists.carousels.png"/> </a>
+						<br>
+						Note: 'Drill Down' list navigation can get cumbersome. <br>
+						Ideal for Collection Siblings.
+					</section>
+
+					<section id="unit7-1-11">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>11 Tabs (Section Siblings)
+						</h2>
+						<a href="#" class="image"> 
+							<img height=375 src="../img/7.tabs.png"/> </a>
+						<br>
+						Lateral navigation. Think Tabs vs. Dashboard. <br>
+						Ideal for parent with 4-or-less section siblings
+					</section>
+
+					<section id="unit7-1-12">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>12 Swipes (Collection Siblings)
+						</h2>
+						<a href="#" class="image"> 
+							<img width=500 src="../img/7.paging.png"/> </a>
+						<a href="#" class="image"> 
+							<img width=300 src="../img/7.paging.ambient.png"/> </a>
+						<br>
+						Lateral navigation. AKA Horizontal Paging. <br>
+						Ideal for collection siblings. <br>
+						Needs complementary 'context' hints
+					</section>
+
+					<section id="unit7-1-13">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>13 Temporal Navigation ("Back")
+						</h2>
+						<br><br>
+						<a href="#" class="image"> 
+							<img src="../img/7.temporal.png"/> </a>
+						<br><br>
+						Recall Task BackStack. System typically handles 'Back'<br>
+						Override within context (e.g., browser) with path to default.
+					</section>
+
+					<section id="unit7-1-14">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>14 Ancestral Navigation ("Up")
+						</h2>
+						<a href="#" class="image"> 
+							<img src="../img/7.ancestral.png"/> </a>
+						<br>
+						"Home" (pre 3.0) vs. "Up" (post 3.0 ActionBar) <br>
+						Safe 'exit' to familiar place (typically parent screen) <br>
+						Can be contextual (e.g., differs based on device orientation) <br>
+						<br>
+						TIP: Proactively clear backstack of 'descendant' screens
+					</section>
+				</section>
+
+
+				<!-- Unit7.2: Wireframing the Example App -->
+				<section>
+					<section id="unit7-1-15">
+						<br><h2> <a href="#/unit7-1">#7.</a>2 Wireframing the Example App </h2><br>
+						<ul>
+							<li> Choose Patterns <br>
+							<li> Sketch and Wireframe <br>
+							<li> Create Digital Wireframes <br>
+						</ul>
+					</section>
+
+					<section id="unit7-1-15-1">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>15.1 App Screen Map
+						</h2>
+						<a href="#" class="image"> 
+							<img src="../img/7.1.screen.maps.png"/> </a>
+						<br><br>
+						Choose patterns to maximize navigation speed <br>
+						 minimize touches, create consistent UI <br>
+						Choose targeted screen sizes (tablet/phone?)
+					</section>
+
+					<section id="unit7-1-15-2">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>15.2 Step 1: Choose Patterns
+						</h2>
+						<ul>
+							<li> Identify Section Siblings (lateral nav.)
+							<li> Identify Collection Siblings (descendant nav.)
+							<li> Define Content 'Fragment' (smallest items)
+							<li> Define 'Activity' screen for device (phone vs. tablet)
+							<li> Think 'alternative layouts' (e.g., for orientation)
+						</ul>
+					</section>
+
+					<section id="unit7-1-15-3">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>15.3 Step 1: Phone
+						</h2>
+						<a href="#" class="image"> 
+							<img height=450 src="../img/7.step1.phone.png"/> </a>
+						<br><br>
+					</section>
+
+					<section id="unit7-1-15-4">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>15.4 Step 1: Tablet
+						</h2>
+						<a href="#" class="image"> 
+							<img height=450 src="../img/7.step1.tablet.png"/> </a>
+						<br><br>
+					</section>
+
+					<section id="unit7-1-15-5">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>15.5 Step 1: Tablet (Alt.)
+						</h2>
+						<a href="#" class="image"> 
+							<img height=450 src="../img/7.step1.tablet.alt.png"/> </a>
+						<br><br>
+					</section>
+
+					<section id="unit7-1-15-6">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>15.6 Creating Wireframes
+						</h2>
+						<ol>
+							<li> Physical sketch (paper/board)
+							<li> Refine thinking (details, flow, adaptation)
+							<li> Peer reviews (errors, omissions)
+							<li> Digital mapping (interactive)
+							<li> User reviews (effort + clarity)
+							<li> Android build (graphical XML) 
+						</ol>
+					</section>
+
+					<section id="unit7-1-15-7">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>15.7 Wireframe (Phone)
+						</h2>
+						<a href="#" class="image"> 
+							<img height=450 src="../img/7.wireframe.phone.png"/> </a>
+						<br>
+						<a href="http://developer.android.com/training/design-navigation/example-wireframe-phone.svg"> View SVG Original </a>
+					</section>
+
+					<section id="unit7-1-15-8">
+						<br><h2> 
+							<a href="#/unit7-1">#7.1.</a>15.8 Wireframe (Tablet)
+						</h2>
+						<a href="#" class="image"> 
+							<img height=450 src="../img/7.wireframe.tablet.png"/> </a>
+						<br>
+						<a href="http://developer.android.com/training/design-navigation/example-wireframe-tablet.svg"> View SVG Original </a>
+					</section>
+
+
+				</section>
+
+				<section data-background="green" id="unit7-review">
+					<br><h2> 
+						<a href="#/unit7-1">#7.1.</a>Assignment 
+					</h2>
+					<br>
+					1: Setup
+					<small>
+					<ul>
+						<li> Create 'cv-project-name' repo in <i> your </i> GitHub 
+						<li> Pick a unique 'name' for you (let me know)
+						<li> Create a branch (1-data-model)
+						<li> Create a filename (README.1.datamodel.md) in branch
+					</ul>
+				</small>
+				<br>
+				<br> 
+				2: Populate
+				<small>
+				<ul>
+					<li> In README.1.datamodel.md, describe your information model
+					<li> Add document showing entity relationships
+					<li> Add document showing screen maps
+					<li> Add document showing v1 of screen wireframe
+					<li> Update README.1.datamodel.md with reasons for decisions
+				</ul>
+				</small>
+				<br><br>
+				<br> First Version: ready to review Fri (Mar 7)
+				<br> Final version: submit (PDF) on Tue (Mar 11)
+				</section>
+
+
+				<!-- Unit7.2: Implementing Effective Navigation -->
+				<section>
+					<section id="unit7-2">
+						<br><h2> <a href="#/unit7">#7.</a>2 Implementing Effective Navigation</h2><br>
+						<ul>
+							<li> Creating Swipe Views with Tabs <br>
+							<li> Creating a Navigation Drawer <br>
+							<li> Providing Up Navigation <br>
+							<li> Providing Proper Back Navigation <br>
+							<li> Implementing Descendant Navigation <br>
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit7.3: Notifying the User -->
+				<section>
+					<section id="unit7-3">
+						<br><h2> <a href="#/unit7">#7.</a>3 Notifying the User</h2><br>
+						<ul>
+							<li> Buildng a Notification <br>
+							<li> Preserving Navigation when Starting an Activity <br>
+							<li> Updating Notifications <br>
+							<li> Using Big View Styles <br>
+							<li> Display Progress in a Notification<br>
+						</ul>
+					</section>
+				</section>
+
+				<!-- Unit7.4: Adding Search Functionality -->
+				<section>
+					<section id="unit7-4">
+						<br><h2> <a href="#/unit7">#7.</a>4 Adding Search Functionality</h2><br>
+						<ul>
+							<li> Setting up the Search Interface <br>
+							<li> Storing and Searching for Data <br>
+							<li> Remaining Backward Compatible <br>
+						</ul>
+					</section>
+
+				</section>
+
+				<!-- Unit1.5: Making Your App Content Searchable By Google -->
+				<section>
+					<section id="unit7-5">
+						<br><h2> <a href="#/unit7">#7.</a>5 Making Your App Content Searchable By Google</h2><br>
+						<ul>
+							<li> Enabling Deep Links for App Content <br>
+							<li> Specifying App Content for Indexing <br>
+						</ul>
+					</section>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in / ../css/theme
+				transition: Reveal.getQueryHash().transition || 'cube', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

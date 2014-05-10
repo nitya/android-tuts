@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Android Development For Beginners: Unit 1</title>
+
+		<meta name="description" content="Android Course Materials">
+		<meta name="author" content="Nitya Narasimhan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../css/reveal.min.css">
+		<link rel="stylesheet" href="../css/theme/moon.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+				<!-- Title Slide -->
+				<section>
+					<h1>Getting Started </h1>
+					<h3>Unit 1.5: Fragments</h3>
+					<br><br>
+					<h6><a href="http://google.com/+NityaNarasimhan">Nitya Narasimhan</a></bold></h6>
+					<br><br>
+					<a href="index.html#/unit1"> BACK TO UNIT 1 </a>
+				</section>
+
+
+
+				<!-- Unit1.5: Building a Dynamic UI with Fragments -->
+				<section data-transition="linear" data-background-transition="slide">
+
+					<section id="unit1-5">
+						<br><h2><a href="index.html#/unit1">#1.</a>5 Building a Dynamic UI with Fragments</h2><br>
+						<ul>
+							<li> <a href="#/unit1-5-1">What are Fragments?</a>
+							<li> <a href="#/unit1-5-2">Creating a Fragment</a>
+							<li> <a href="#/unit1-5-3">Building a Flexible UI</a>
+							<li> <a href="#/unit1-5-4">Communicating with Other Fragments</a>
+						</ul>
+					</section>
+
+					<section id="unit1-5-0">
+						<h2><a href="#/unit1-5">#1.5</a>.0 What are Fragments?</h2>
+						<img src="../img/fragments/1.5.0.fragmentcombo.png" />
+						<br>
+						Decompose app functionality and UI into modules
+
+						<br><br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-1">
+						<h2><a href="#/unit1-5">#1.5</a>.1 About Fragments</h2>
+						<ul>
+							<li> Embed in Activity. Reuse across Activities.
+							<li> Add/Remove dynamically. Minimize switches.
+							<li> Has/Manages own lifecycle, state, backstack
+							<li> Lifecycle co-ordinated with host Activity's
+						<br><br>								
+							<li> Lives within <i>ViewGroup</i> in Activity
+							<li> Manages own layout (Activity <i>fragment</i>) 
+							<li> <i>Can</i> be used as invisible worker (no UI)
+						<br>
+						<br>
+						Require API 11 or higher (or <a href="http://developer.android.com/tools/support-library/setup.html"> Support Library</a>)
+						</ul>
+
+						<br><br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-1-1">
+						<h2><a href="#/unit1-5">#1.5</a>.1.1 The Fragment Lifecycle</h2>
+
+						<img height=400 src="../img/fragments/frag.lifecycle.A.png" />
+						<img height=400 src="../img/fragments/frag.lifecycle.B.png" />
+						<br>
+						Subclass <a href="http://developer.android.com/reference/android/app/Fragment.html">Fragment</a>. Activity-like callbacks.<br>
+
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-1-2">
+						<h2><a href="#/unit1-5">#1.5</a>.1.2 Special Fragment Types</h2>
+
+						<img height=300 src="../img/fragments/frag.dialogFragment.png" />
+						<br>
+						Display floating dialog. Backstack-navigable.
+						<br>
+						Subclass <a href="http://developer.android.com/reference/android/app/DialogFragment.html">DialogFragment </a><br>
+
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-1-3">
+						<h2><a href="#/unit1-5">#1.5</a>.1.3 Special Fragment Types</h2>
+
+						<img height=300 src="../img/fragments/frag.listFragment.png" />
+						<br>
+						List of items managed by Adapter. (like ListActivity)
+						<br>
+						Subclass <a href="http://developer.android.com/reference/android/app/ListFragment.html">ListFragment </a><br>
+
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-1-4">
+						<h2><a href="#/unit1-5">#1.5</a>.1.4 Special Fragment Types</h2>
+
+						<img src="../img/fragments/frag.preferenceFragment.png" />
+						<br>
+						Hierarchy of <i>Preference</i> objects. (use for <a href="http://developer.android.com/guide/topics/ui/settings.html#Fragment">Settings</a>)
+						<br>
+						Subclass <a href="http://developer.android.com/reference/android/preference/PreferenceFragment.html">PreferenceFragment </a><br>
+
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-1-5">
+						<h2><a href="#/unit1-5">#1.5</a>.1.5 Add Declaratively</h2>
+						<img src="../img/fragments/frag.layout.png" />
+						<br>
+						Specify <i>fragment</i> layout properties <br>within activity layout xml
+
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-1-6">
+						<h2><a href="#/unit1-5">#1.5</a>.1.6 Add Programmatically</h2>
+						<pre><code>
+/* Instantiate the Fragment you want to add */
+ExampleFragment fragment = new ExampleFragment();
+
+/* Get handle to FragmentManager for Activity */
+FragmentManager fragmentManager = getFragmentManager()
+
+/* Begin a new FragmentTransaction */
+FragmentTransaction fragmentTransaction = 
+	fragmentManager.beginTransaction();
+
+/* Add fragment to specified layout & commit */
+fragmentTransaction.add(R.id.fragment_container, fragment);
+fragmentTransaction.commit();
+						</pre></code>
+						
+						Every Fragment operation is a 'transaction'
+						<br>
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+
+					<section id="unit1-5-1-6">
+						<h2><a href="#/unit1-5">#1.5</a>.1.6 Fragment Manager</h2>
+						<pre><code>
+/* Instantiate the Fragment you want to add */
+ExampleFragment fragment = new ExampleFragment();
+
+/* Get handle to FragmentManager for Activity */
+FragmentManager fragmentManager = getFragmentManager()
+
+/* Begin a new FragmentTransaction */
+FragmentTransaction fragmentTransaction = 
+	fragmentManager.beginTransaction();
+
+/* Add fragment to specified layout & commit */
+fragmentTransaction.add(R.id.fragment_container, fragment);
+fragmentTransaction.commit();
+						</pre></code>
+						
+						Powerful way to add/remove/replace fragments <br> 
+						dynamically (e.g., from user interactions)
+						<br>
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-1-7">
+						<h2><a href="#/unit1-5">#1.5</a>.1.7 Inflate Fragment</h2>
+						<pre><code>
+public static class ExampleFragment extends Fragment {
+	
+    // container is parent ViewGroup
+    // inflater is contextual to device, returns fragment ViewGroup
+    // inflater 'can' explicitly attach child VG to parent VG
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, 
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.example_fragment, 
+                                container, 
+                                false);
+    }
+}
+						</pre></code>
+						
+						Must implement onCreateView() to show fragment
+						<br>
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+
+					<section id="unit1-5-1-8">
+						<h2><a href="#/unit1-5">#1.5</a>.1.8 Fragment LifeCycle</h2>
+						<img src="../img/fragments/frag.lifecycle.png" />
+
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+
+					<section id="unit1-5-1-8-1">
+						<h2><a href="#/unit1-5">#1.5</a>.1.8 States & Relationships </h2>
+						<ul>
+							<li> <i>Transient</i> Creation
+							<li> Running = Visible, Running Activity
+							<li> Paused = Visible, Paused Activity
+							<li> Stopped = Invisible
+							<li> <i>Transient</i> Destruction
+						</ul>
+
+						<pre><code>
+ /* Fragments can access their host activity */
+ View listView = getActivity().findViewById(R.id.list);
+
+ /* Activity can access its hosted fragment */
+ ExampleFragment fragment = 
+     (ExampleFragment) getFragmentManager().findFragmentById(R.id.example_fragment);
+						</code></pre>
+
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+
+					<section id="unit1-5-1-8-2">
+						<h2><a href="#/unit1-5">#1.5</a>.1.8.2 Event Callbacks to Activity </h2>
+						<pre><code>
+ /* Fragment defines listener interface for event */
+ public static class FragmentA extends ListFragment {
+    ...
+    // Container Activity must implement this interface
+    public interface OnArticleSelectedListener {
+        public void onArticleSelected(Uri articleUri);
+    }
+    ...
+}
+
+ /* And casts host Activity onAttach() to ensure compliance */
+ public static class FragmentA extends ListFragment {
+    OnArticleSelectedListener mListener;
+    ...
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnArticleSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+        }
+    }
+    ...
+}
+						</code></pre>
+
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+
+					<section id="unit1-5-1-8-3">
+						<h2><a href="#/unit1-5">#1.5</a>.1.8.3 Fragments & BackStack </h2>
+						<ul>
+							<li> Activity goes on system-managed backstack 
+							<li> Happens automatically (on 'back')
+							<li> Fragment placed on activity-managed backstack
+							<li> Requires explicit request <i>addToBackStack()</i>
+						</ul>
+						<br><br>
+						<br><small><a href="http://developer.android.com/guide/components/fragments.html"> Reference </a></small>
+					</section>
+
+
+
+					<section data-background="green" id="unit1-5-1-9">
+						<h2><a href="#/unit1-5">#1.5</a>.1.9 Code Walkthrough</h2>
+						<br>
+						<br>
+						Download and install the <br>
+						FragmentBasics.zip demo <br><br>
+
+						From Android Developers Site <br>
+						<small> <a href="http://developer.android.com/shareables/training/FragmentBasics.zip"> http://developer.android.com/training/basics/fragments/index.html </a> </small>
+						<br><br>
+						Next Up &nbsp;&nbsp; 
+						<small>
+						<ul>
+							<li> WIREFRAMING (FluidUI, Balsamiq)
+							<li> RESUME APP Individual Project (20%)
+							<li> TEAM UP Group Project (40%)
+							<li> TEST TIME: Mar 14, Multiple Choice (10%)
+							<li> ASSIGNMENT: <a href=
+								"http://bit.ly/hawks-help-assign1">http://bit.ly/hawks-help-assign1</a>
+						</ul>
+						</small>
+					</section>
+
+
+					<section id="unit1-5-2">
+						<h2><a href="#/unit1-5">#1.5</a>.2 Creating a Fragment</h2>
+						<br><small><a href="http://developer.android.com/training/basics/fragments/creating.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-3">
+						<h2><a href="#/unit1-5">#1.5</a>.3 Building a Flexible UI</h2>
+						<br><small><a href="http://developer.android.com/training/basics/fragments/fragment-ui.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-5-4">
+						<h2><a href="#/unit1-5">#1.5</a>.4 Communicating with Other Fragments</h2>
+						<br><small><a href="http://developer.android.com/training/basics/fragments/communicating.html"> Reference </a></small>
+					</section>
+
+				</section>
+
+
+
+				<!-- Unit1.6: Saving Data -->
+				<section data-transition="linear" data-background-transition="slide">
+					<section id="unit1-6">
+						<br><h2><a href="index.html#/unit1">#1.</a>6 Saving Data</h2><br>
+						<ul>
+							<li> <a href="#/unit1-6-1">Save Key-Value Sets</a>
+							<li> <a href="#/unit1-6-2">Save Files</a>
+							<li> <a href="#/unit1-6-3">Save Data in SQL databases</a>
+						</ul>
+					</section>
+
+
+					<section id="unit1-6-1">
+						<h2><a href="#/unit1-6">#1.6</a>.1 Saving Key-Value Sets</h2>
+
+						<br><small><a href="http://developer.android.com/training/basics/data-storage/shared-preferences.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-6-2">
+						<h2><a href="#/unit1-6">#1.6</a>.2 Saving Files</h2>
+
+						<br><small><a href="http://developer.android.com/training/basics/data-storage/files.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-6-3">
+						<h2><a href="#/unit1-6">#1.6</a>.3 Saving Data in SQL Databases</h2>
+
+						<br><small><a href="http://developer.android.com/training/basics/data-storage/databases.html"> Reference </a></small>
+					</section>
+
+				</section>
+
+
+
+				<!-- Unit1.7: Interacting with Other Apps -->
+				<section data-transition="linear" data-background-transition="slide">
+					<section id="unit1-7">
+						<br><h2><a href="index.html#/unit1">#1.</a>7 Interacting with Other Apps</h2><br>
+						<ul>
+							<li> <a href="#/unit1-7-1">Sending the User to Another App</a>
+							<li> <a href="#/unit1-7-2">Getting a Result from the Activity</a>
+							<li> <a href="#/unit1-7-3">Allowing Other Apps to Start Your Activity</a>
+						</ul>
+					</section>
+
+					<section id="unit1-7-1">
+						<h2><a href="#/unit1-7">#1.7</a>.1 Sending the User to Another App</h2>
+
+						<br><small><a href="http://developer.android.com/training/basics/intents/sending.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-7-2">
+						<h2><a href="#/unit1-7">#1.7</a>.2 Getting a Result from the Activity</h2>
+
+						<br><small><a href="http://developer.android.com/training/basics/intents/result.html"> Reference </a></small>
+					</section>
+
+					<section id="unit1-7-3">
+						<h2><a href="#/unit1-7">#1.7</a>.3 Allowing Other Apps to Start Your Activity</h2>
+
+						<br><small><a href="http://developer.android.com/training/basics/intents/filters.html"> Reference </a></small>
+					</section>
+				</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in / ../css/theme
+				transition: Reveal.getQueryHash().transition || 'cube', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>
