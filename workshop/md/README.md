@@ -15,6 +15,7 @@ The materials are based on class lectures as well as online references, tutorial
 | 5 | [Android For Programmers Code](http://www.deitel.com/Books/Android/AndroidforProgrammers2e/tabid/3653/Default.aspx) (Requires Registration) | Online |
 | 6 | [F-Droid FOSS Android Apps](https://f-droid.org/repository/browse/) (Learn from others) | Online |
 | 7 | [Android Developers YouTube Channel](https://www.youtube.com/user/androiddevelopers/videos) (talks, tutorials, best practices) | Online |
+| 8 | [Android Open Source Project](https://source.android.com/index.html) | Online |
 
 In particular, the references 1-3 have been chosen due to the rigor with which those sources are updated to reflect the latest changes and additions to the Android platform.
 
